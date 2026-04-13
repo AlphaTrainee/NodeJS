@@ -1,0 +1,20 @@
+DirectoryIndex  myindex.html
+Options +Indexes
+IndexIgnore __*.* *.jpg* *.webp *.bmp *.png *.gif *.zip *.7z *.ods composer.* favicon.ico make_symlink_*.bat
+
+AddDefaultCharset utf-8
+AddType "application/javascript; charset=utf-8" .js
+
+<If "%{REQUEST_URI} =~ m#/JavaScript_SRC/#">
+    # This will prevent apache from executing *.php-files
+    php_flag engine off
+    
+    # this wil display ***-files in browser (if not, browser will want to download file!)
+    AddType text/plain php
+    AddType text/plain htm
+    AddType text/plain html
+    AddType text/plain csv
+	AddType text/plain js
+</If>
+
+# php_value session.use_cookies 0
