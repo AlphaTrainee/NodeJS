@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+    <style>
+        canvas {
+            border: none;
+            display: block;
+            /* Macht das Canvas zum Block-Element */
+            margin: 20px auto;
+            /* 20px oben/unten, 'auto' links/rechts zentriert es */
+        }
+
+        .controls {
+            display: flex;
+            /* Aktiviert Flexbox */
+            justify-content: center;
+            /* Zentriert die Inhalte horizontal */
+            gap: 30px;
+            /* Erzeugt einen ordentlichen Abstand zwischen den Elementen */
+            font-family: sans-serif;
+            margin-top: 10px;
+        }
+
+        /* Optional: Damit die Labels beim Drüberfahren mit der Maus zeigen, dass sie klickbar sind */
+        label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+input[type="checkbox"] {
+    /* Ändert die Farbe der Checkbox (Haken und Hintergrund im aktiven Zustand) */
+    accent-color: #999; 
+    cursor: pointer;
+}
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="640" height="640"></canvas>
+    <div class="controls">
+        <label>
+            <input type="checkbox" id="clockFace" checked> Clock Face
+        </label>
+        <label>
+            <input type="checkbox" id="alternativeClockFace"> Alternative Clock Face
+        </label>
+        <label>
+            <input type="checkbox" id="smoothToggle" checked> Smooth Movement
+        </label>
+        <label>
+            <input type="checkbox" id="showTicks" checked> Show Minute Ticks
+        </label>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
