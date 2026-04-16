@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Übung: Maps, Sets & Generatoren</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        section { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h2 { color: #e67e22; margin-top: 0; }
+        .explanation { background: #e8f4fd; padding: 10px; border-left: 5px solid #3498db; margin-bottom: 15px; font-style: italic; }
+        pre { background: #2d3436; color: #dfe6e9; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        button { background-color: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        button:hover { background-color: #2980b9; }
+        .output { margin-top: 15px; padding: 10px; background: #f9f9f9; border: 1px dashed #ccc; min-height: 20px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+    <h1>JavaScript Lern-Dashboard</h1>
+    <p>Hier kannst du die Konzepte Maps, Sets und Generatoren isoliert testen. Öffne zusätzlich <b>F12 (Konsole)</b>.</p>
+
+    <!-- SETS -->
+    <section id="sets-section">
+        <h2>1. Sets (Einzigartige Listen)</h2>
+        <div class="explanation">
+            <b>Sinn:</b> Verhindert automatisch Duplikate. Gut für Tags, IDs oder besuchte Seiten.
+        </div>
+        <pre>
+let tags = new Set();
+tags.add("JavaScript");
+tags.add("Web");
+tags.add("JavaScript"); // Wird ignoriert
+        </pre>
+        <button onclick="runSetDemo()">Set Demo starten</button>
+        <div id="set-output" class="output">Klicke auf den Button...</div>
+    </section>
+
+    <!-- MAPS -->
+    <section id="maps-section">
+        <h2>2. Maps (Schlüssel-Wert-Paare)</h2>
+        <div class="explanation">
+            <b>Sinn:</b> Verknüpft Informationen mit Objekten. Mächtiger als normale { } Objekte.
+        </div>
+        <pre>
+let preise = new Map();
+preise.set("Apfel", 0.99);
+preise.set("Brot", 2.50);
+        </pre>
+        <button onclick="runMapDemo()">Map Demo starten</button>
+        <div id="map-output" class="output">Klicke auf den Button...</div>
+    </section>
+
+    <!-- GENERATOREN -->
+    <section id="generators-section">
+        <h2>3. Generatoren (Pausierbare Funktionen)</h2>
+        <div class="explanation">
+            <b>Sinn:</b> Erzeugt Werte nur bei Bedarf (Lazy Loading). Perfekt für IDs oder schrittweise Abläufe.
+        </div>
+        <pre>
+function* idGenerator() {
+    let id = 1;
+    while(true) yield id++;
+}
+        </pre>
+        <button onclick="runGeneratorDemo()">Nächste ID generieren</button>
+        <div id="gen-output" class="output">Klicke auf den Button...</div>
+    </section>
+
+    <script>
+        // --- SET DEMO ---
+        const besucherTags = new Set();
+        function runSetDemo() {
+            const input = prompt("Gib einen Tag ein (z.B. 'JS'):");
+            if(input) {
+                besucherTags.add(input.trim());
+                document.getElementById('set-output').innerText = 
+                    "Einzigartige Tags: " + Array.from(besucherTags).join(", ");
+                console.log("Set Inhalt:", besucherTags);
+            }
+        }
+
+        // --- MAP DEMO ---
+        const warenkorb = new Map();
+        warenkorb.set("Milch", 1.20);
+        warenkorb.set("Brot", 2.45);
+        warenkorb.set("Eier", 3.10);
+
+        function runMapDemo() {
+            let info = "Preise im System:";
+            warenkorb.forEach((preis, artikel) => {
+                info += artikel + ": " + preis + "€ | ";
+            });
+            document.getElementById('map-output').innerText = info;
+            console.log("Map Inhalt:", warenkorb);
+        }
+
+        // --- GENERATOR DEMO ---
+        function* ticketSystem() {
+            let ticketNr = 100;
+            while(true) {
+                yield "Ticket-Nr: " + (ticketNr++);
+            }
+        }
+        const serviceSchlange = ticketSystem();
+
+        function runGeneratorDemo() {
+            const nachster = serviceSchlange.next().value;
+            document.getElementById('gen-output').innerText = "Aufgerufen: " + nachster;
+            console.log("Generator Status:", nachster);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+"use strict";
+
+{
+
+    const DB_NAME = "Einkaufsliste";
+    const DB_VERSION = 1;
+    let db;
+
+    // Öffnen der DB
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+    // Tabelle anlegen
+    request.onupgradeneeded = function(event) {
+        db = event.target.result;
+
+        // Object Store erstellen
+        if (!db.objectStoreNames.contains("items")) {
+            let store = db.createObjectStore("items", {keyPath: "id", autoIncrement: true});
+            store.createIndex("name", "name", {unique: true});
+        }
+        console.log("DB initialisiert");
+    };
+
+
+    // Fehlerbehandlung
+    request.onerror = (event) => {
+        console.log(`Fehler beim Öffnen der Datenbank: ${event.target.errorCode}`);
+    };
+
+    // Transaktionen
+    request.onsuccess = (event) => {
+        db = event.target.result;
+        console.log("DB Verbindung erfolgreich");
+    
+        // Transaktionen starten
+/*         saveItem("Milch", 1);
+        saveItem("Brot", 2);
+        saveItem("Butter", 3);
+        saveItem("Eier", 4); */
+
+        //getAllItems();
+        getItemById(1);
+
+    };
+
+    // Funktionen für Transaktionen
+    // Speichern
+
+    function saveItem(name, value) {
+        let transaction = db.transaction(["items"], "readwrite");
+        let store = transaction.objectStore("items");
+        const request = store.add({name, value});
+
+        transaction.onsuccess = () => console.log("Daten gespeichert", request.result);
+
+        transaction.onerror = (event) => {
+            if(event.target.error.name === "ConstraintError") {
+                console.log("Datensatz schon vorhanden, kann nicht gespeichert werden", {name, value});
+
+            } else {
+                console.log("Fehler", event.target.error.name, event.target.error.message);
+            }
+        };
+
+        //transaction.oncomplete = () => console.log();
+    };
+
+    function getAllItems() {
+        let transaction = db.transaction(["items"], "readonly");
+        let store = transaction.objectStore("items");
+        const request = store.getAll();
+
+        transaction.onsuccess = (event) => console.log("Alle Daten abgerufen", event.request.result);
+
+/*         transaction.onerror = (event) => {
+            if(event.target.error.name === "ConstraintError") {
+                console.log("Datensatz schon vorhanden, kann nciht gespeichert werden", {name, value});
+
+            } else {
+                console.log("Fehler", event.target.error.name, event.target.error.message);
+            }
+        };
+ */
+        transaction.oncomplete = () => console.log();
+
+    };
+
+    function getItemById(id) {
+        let transaction = db.transaction(["items"], "readonly");
+        let store = transaction.objectStore("items");
+        const request = store.get(id);
+
+        transaction.onsuccess = () => {
+           let data = request.result;
+
+           if (data) {
+            console.log("Daten:", data);
+           } else {
+            console.log("keine daten");
+           }
+        
+        }
+
+        transaction.onerror = (event) => {
+            if(event.target.error.name === "ConstraintError") {
+                console.log("Datensatz schon vorhanden, kann nicht gespeichert werden", {name, value});
+
+            } else {
+                console.log("Fehler", event.target.error.name, event.target.error.message);
+            }
+        };
+
+        transaction.oncomplete = () => console.log();
+
+    }
+ }

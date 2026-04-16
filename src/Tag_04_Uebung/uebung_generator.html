@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Übung - Generatoren</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 40px auto; padding: 20px; background-color: #f9f7fd; }
+        .card { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid #9b59b6; }
+        h2 { color: #9b59b6; margin-top: 0; }
+        .highlight { background-color: #f5f0f9; padding: 15px; border-left: 5px solid #9b59b6; margin: 15px 0; }
+        .why { font-weight: bold; display: block; margin-bottom: 5px; }
+        code { background: #eee; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>3. Generatoren (Pausierbare Funktionen)</h2>
+        <p>Ein <strong>Generator</strong> (<code>function*</code>) ist eine Funktion, die man mittendrin mit <code>yield</code> anhalten kann. Sie "wartet" dann auf das nächste <code>.next()</code>.</p>
+        
+        <div class="highlight">
+            <span class="why">Warum brauche ich das?</span>
+            Um riesige Datenmengen (z.B. Millionen Zeilen einer Datei) Stück für Stück zu verarbeiten, ohne den Arbeitsspeicher zu überlasten. Oder für endlose Nummerierungen (IDs).
+        </div>
+        <script src="./uebung_generator.js"></script>
+    </div>
+</body>
+</html>
