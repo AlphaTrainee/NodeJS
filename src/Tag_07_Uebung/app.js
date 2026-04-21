@@ -6,7 +6,7 @@ npm config set init-license "MIT"
 npm config set init-type "module"
 
 npm init -y
-npm i https://raw.githubusercontent.com/AlphaTrainee/NodeJS/refs/heads/main/modules/01_random_numbers/01_random_numbers-1.0.0.tgz
+npm i https://github.com/AlphaTrainee/NodeJS/raw/refs/heads/main/modules/01_random_numbers/01_random_numbers-1.0.0.tgz
 
 */
 

@@ -46,3 +46,13 @@ Bevor man packt, muss die "Inhaltsliste" stimmen. Öffne deine package.json. Ein
 
 ### Woher weiß ich, was gerade "verlinkt" ist?
 - ```npm ls -g --depth=0```
+
+### aus dem GitHub Repo installieren
+- es kann die *.tgz (das gepackte Modul) direkt installiert werden
+    ```npm i https://raw.githubusercontent.com/*****.tgz```
+- RAW Url ermitteln:
+    - navigiere zum File *.tgz
+    - rechts oben "rechts Klick" auf "raw"
+    - kopiere Link URL
+    - diese URL oben einfügen
+    

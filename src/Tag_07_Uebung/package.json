@@ -11,6 +11,6 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "01_random_numbers": "https://raw.githubusercontent.com/AlphaTrainee/NodeJS/refs/heads/main/modules/01_random_numbers/01_random_numbers-1.0.0.tgz"
+    "01_random_numbers": "https://github.com/AlphaTrainee/NodeJS/raw/refs/heads/main/modules/01_random_numbers/01_random_numbers-1.0.0.tgz"
   }
 }
