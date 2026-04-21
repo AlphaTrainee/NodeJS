@@ -1,0 +1,20 @@
+{
+  "name": "01_random_numbers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "modules/random.js"
+  ],
+  "keywords": [
+    "lotto",
+    "random",
+    "numbers",
+    "unique",
+    "generator"
+  ],
+  "author": "Franziska Walter <job@f-walter.de> (https://alpha.franzi.hamburg/)",
+  "license": "MIT",
+  "type": "module"
+}
