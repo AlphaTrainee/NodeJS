@@ -1,0 +1,16 @@
+{
+  "name": "tag_07_uebung",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Franziska Walter <job@f-walter.de> (https://alpha.franzi.hamburg/)",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "01_random_numbers": "https://raw.githubusercontent.com/AlphaTrainee/NodeJS/refs/heads/main/modules/01_random_numbers/01_random_numbers-1.0.0.tgz"
+  }
+}
