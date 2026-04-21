@@ -1,0 +1,17 @@
+{
+    "name": "modulentwicklung",
+    "version": "1.0.0",
+    "description": "Kurs Modul 1",
+    "keywords": [
+        "name",
+        "short",
+        "modul"
+    ],
+    "main": "index.js",
+    "private": true,
+    "type": "module",
+    "license": "MIT",
+    "dependencies": {
+        "modulentwicklung": "file:modulentwicklung-1.0.0.tgz"
+    }
+}

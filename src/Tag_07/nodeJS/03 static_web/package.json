@@ -1,0 +1,7 @@
+{
+    "name": "express-server",
+    "version": "",
+    "dependencies": {
+        "express": "5.2.1"
+    }
+}

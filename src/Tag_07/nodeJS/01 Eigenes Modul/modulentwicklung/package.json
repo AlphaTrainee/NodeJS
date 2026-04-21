@@ -1,0 +1,7 @@
+{
+    "name": "modulentwicklung",
+    "version": "0.0.1",
+    "description": "Kurs Modul 1",
+    "private": true,
+    "type": "module"
+}

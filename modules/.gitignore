@@ -1,0 +1,16 @@
+# Abhängigkeiten - Dieser Ordner ist riesig und wird nie hochgeladen
+node_modules/
+
+# Logs - Falls mal etwas abstürzt, brauchen wir die Fehlerprotokolle nicht im Git
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Betriebssystem-Dateien (Müll, den Windows/Mac ungefragt erstellt)
+.DS_Store
+Thumbs.db
+
+# Umgebungsvariablen (Passwörter, API-Keys - EXTREM WICHTIG!)
+.env
+
+# *.tgz
