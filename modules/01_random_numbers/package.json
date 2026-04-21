@@ -2,10 +2,9 @@
   "name": "01_random_numbers",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "random.js",
   "files": [
-    "index.js",
-    "modules/random.js"
+    "random.js"
   ],
   "keywords": [
     "lotto",
