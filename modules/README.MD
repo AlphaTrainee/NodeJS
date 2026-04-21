@@ -7,9 +7,9 @@
     ```npm config set init-type "module"```
 - Weitere hilfreiche Defaults (Optional)   
     ```
-    npm config set init-author-name "Franziska Walter"
-    npm config set init-author-email "job@f-walter.de"
-    npm config set init-author-url "https://alpha.franzi.hamburg"
+    npm config set init-author-name "Dein Name"
+    npm config set init-author-email "Deine eMail"
+    npm config set init-author-url "Deine Homepage"
     ```
 - Eintrag löschen   
     ```npm config delete [Eintrag]```
@@ -55,4 +55,3 @@ Bevor man packt, muss die "Inhaltsliste" stimmen. Öffne deine package.json. Ein
     - rechts oben "rechts Klick" auf "raw"
     - kopiere Link URL
     - diese URL oben einfügen
-    
