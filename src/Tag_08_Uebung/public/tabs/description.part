@@ -1,0 +1,9 @@
+    <article>
+      <h2>Lösung Beschreibung</h2>
+      <p>
+          Die mitgelieferte Lösung funktioniert nur so lange, wie die Tab-Buttons und der Inhalt in der richtigen Reihenfolge gespeichert wurde.
+      </p>
+      <p>
+          Falls die Artikel in einer anderen Reihenfolge abgelegt wurden, kommen Buttons und Artikel durcheinander, weil nur der Index ausgewertet wird.
+      </p>
+    </article>
