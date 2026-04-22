@@ -1,0 +1,17 @@
+<%- include("./parts/head", {title: name, stylePath: "../style.css"}) %>
+
+<body>
+    <h1><%= name %></h1>
+    <p>Beschreibung: <%= desc %></p>
+    <p>Preis: <%= price %> €</p>
+    <% if (stockWarn) { %>
+        <p>
+            Achtung: Geringer Warenbestand!<br>
+            Es sind nur noch <%= qty %> Artikel vorhanden!
+        </p>
+    <% } %>
+
+    <a href="/">Zurück zur Startseite</a>
+</body>
+
+</html>

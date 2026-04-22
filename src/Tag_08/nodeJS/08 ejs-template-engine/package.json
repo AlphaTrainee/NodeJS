@@ -1,0 +1,17 @@
+{
+  "name": "08-ejs-template-engine",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Franziska Walter <job@f-walter.de> (https://alpha.franzi.hamburg/)",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1"
+  }
+}

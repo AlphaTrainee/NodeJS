@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+    crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <nav>
+      <ul class="nav nav-pills">
+        <li role="presentation"><a id="login" href="login.html">Login</a></li>
+        <li role="presentation"><a id="register" href="register.html">Registrieren</a></li>
+      </ul>
+    </nav>
+    <main id="main-content" class="container col-xs-offset-2 col-xs-8">
+      <form id="loginform" name="login" method="post" action="login.html">
+        <div class="form-group">
+          <label for="username">Nutzername:</label>
+          <input type="text" id="username" name="username" required class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="password">Passwort:</label>
+          <input type="password" id="password" name="password" required class="form-control">
+        </div>
+        <button type="submit" id="submit" name="submit" class="btn btn-primary btn-block">Anmelden</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
