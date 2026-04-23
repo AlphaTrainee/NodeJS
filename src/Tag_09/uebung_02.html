@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="newTodo" placeholder="Was ist zu tun?">
+        <button @click="addTodo">Hinzufügen</button>
+        <button @click="removeTodo">Entfernen</button>
+        <button @click="clearTodo">Clear</button>
+
+        <p v-if="todos.length === 0">Noch keine Aufgaben!</p>
+
+        <ul>
+            <li v-for="todo in todos">{{ todo }}</li>
+        </ul>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const newTodo = ref("");
+                const todos = ref([]);
+
+                function addTodo() {
+                    if (newTodo.value.trim() !== "") {
+                        todos.value.push(newTodo.value);
+                        newTodo.value = "";
+                    }
+                }
+
+                function removeTodo() {
+                    todos.value.pop();
+                }
+
+                function clearTodo() {
+                    todos.value = [];
+                }
+
+                return { newTodo, todos, addTodo, removeTodo, clearTodo };
+            }
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

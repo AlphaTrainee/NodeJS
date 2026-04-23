@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <input type="text" v-model="newTodo" placeholder="Was ist zu tun?" />
+      <button @click="addTodo">Hinzufügen</button>
+
+
+      <p>Gesamt: {{ todos.length }} | Offen: {{ openCount }} | Erledigt: {{ doneCount }} </p>
+
+      <ul>
+        <li v-for="todo in todos">{{ todo.text }}
+            <button @click="todo.done = !todo.done">{{ todo.done ? 'erledigt' : 'offen' }}</button>
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      const { createApp, ref, reactive, computed } = Vue;
+
+      createApp({
+        setup() {
+          const newTodo = ref("");
+          const todos = reactive([]);
+
+          function addTodo() {
+            if (newTodo.value.trim() !== "") {
+              todos.push({ id: Date.now(), text: newTodo.value, done: false });
+              newTodo.value = "";
+            }
+          }
+
+          const openCount = computed(() => {
+                return todos.filter(todo => !todo.done).length
+          })
+
+          const doneCount = computed(() => {
+                return todos.filter(todo => todo.done).length
+          })
+
+          console.log()
+
+
+          return { newTodo, todos, addTodo, openCount, doneCount };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

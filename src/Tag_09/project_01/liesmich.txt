@@ -1,0 +1,40 @@
+Benutzter Befehl
+
+npm create vite@latest meine.app -- --template vue
+cd meine.app
+npm install --ignore-scripts
+npm run dev
+
+npm run dev -- --host 127.0.0.1 --port 5173
+ALIAS: npm-run-dev
+
+vue router installieren
+-----------------------
+
+npm i vue-router
+
+
+Server nicht erreichbar
+-> im Firefox ist IPv6 deaktiviert
+about:config
+network.dns.disableIPv6 -> false
+
+--------------
+vite.config.js
+--------------
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [vue()],
+  server: {
+    host: '127.0.0.1',
+    port: 5173
+  }
+})
+
+npx vite --host 127.0.0.1
+
+# macht keinen sinn
+netsh advfirewall firewall add rule name="VITE_IN" dir=in action=allow protocol=TCP localport=5173 profile=any
+netsh advfirewall firewall add rule name="VITE_OUT" dir=out action=allow protocol=TCP localport=5173 profile=any

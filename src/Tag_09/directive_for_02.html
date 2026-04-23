@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+        </ul>
+    </div>
+
+    <script>
+        const { createApp, reactive } = Vue;
+
+        createApp({
+            setup() {
+                const items = reactive([
+                    { id:1, name: "Apfel" },
+                    { id:2, name: "Kirsche" },
+                    { id:3, name: "Banane" },
+                    { id:4, name: "Birne" },
+                    { id:5, name: "Erdbeere" },
+                    { id:6, name: "Pfirsich" },
+                ]);
+                return{ items };
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <img @click="isLoading = !isLoading" :src="imgUrl" :alt="imgAlt" :title="imgAlt">
+        <!-- //
+        <br>
+        <img v-bind:src="imgUrl" v-bind:alt="imgAlt"> 
+        // -->
+        <br>
+        <button @click="reload" :disabled="isLoading">Senden</button>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const imgUrl = ref("https://picsum.photos/200");
+                const imgAlt = ref("ein zufälliges Bild");
+                const isLoading = ref(false);
+
+                function reload() {
+                    imgUrl.value = "https://picsum.photos/200";
+                };
+
+                return { imgUrl, imgAlt, isLoading };
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
