@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- socket.io Frontend-Bibliothek importieren -->
     <script src="/socket.io/socket.io.js"></script>
+
 </head>
 <body>
     
     <img src="" id="bulb">
 
-    
     <script>
-        
 
-        const socket = io(`http://localhost:3000`, {
-            transports: ["websocket", "polling"]
+        <!-- Verbindung über Websockets zwischen Client und Server herstellen -->
+        const socket = io.connect('//localhost:3000', {
+            transports: ['websocket', "polling"]
         });
 
         const bulb = document.getElementById("bulb");
 
         socket.emit("getLightState");
 
-        socket.on("setLightState", (state) => bulb.src = state ? "light-on.png" : "light-off.png")
+        socket.on("setLightState", (state) => bulb.src = state ? "/light-on.png" : "/light-off.png");
 
-        bulb.addEventListener("click", () => socket.emit("toggleLightState"));
+        bulb.addEventListener("click", () => socket.emit("toggleLight"));
+
     </script>
+    
 </body>
 </html>

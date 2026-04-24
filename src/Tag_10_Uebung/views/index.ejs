@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <% if (user) { %>
+            <div class="view-user">
+                <span class="user-badge">Eingeloggt</span>
+                <h1>Hallo, <%= user.username %>!</h1>
+                <p>Willkommen zurück in deinem Bereich.</p>
+                <a href="/logout" class="btn btn-logout">Abmelden</a>
+            </div>
+        <% } else { %>
+            <div class="view-guest">
+                <h1>Willkommen</h1>
+                <p>Bitte logge dich ein, um fortzufahren.</p>
+                <a href="/login" class="btn">Zum Login</a>
+            </div>
+        <% } %>
+    </div>
+
+</body>
+</html>

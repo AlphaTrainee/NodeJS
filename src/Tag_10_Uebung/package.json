@@ -1,0 +1,23 @@
+{
+  "name": "tag_10_uebung",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Franziska Walter <job@f-walter.de> (https://alpha.franzi.hamburg/)",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.2",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  }
+}

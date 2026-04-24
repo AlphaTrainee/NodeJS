@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    
+    <img src="" id="bulb">
+
+    
+    <script>
+        
+
+        const socket = io(`http://localhost:3000`, {
+            transports: ["websocket", "polling"]
+        });
+
+        const bulb = document.getElementById("bulb");
+
+        socket.emit("getLightState");
+
+        socket.on("setLightState", (state) => bulb.src = state ? "light-on.png" : "light-off.png")
+
+        bulb.addEventListener("click", () => socket.emit("toggleLightState"));
+    </script>
+</body>
+</html>
