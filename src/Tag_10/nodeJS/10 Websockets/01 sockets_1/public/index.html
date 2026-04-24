@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Websocket-Beispiel</title>
+    <!-- socket.io Frontend Lib importieren -->
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+
+<body>
+
+    <div id="msg"></div>
+
+    <script>
+        const socket = io(`http://localhost:3000`, {
+            transports: ["websocket", "polling"]
+        });
+
+        const output = document.getElementById("msg");
+        socket.on("news", (msg) => output.textContent += msg + '\n');
+
+    </script>
+</body>
+
+</html>
