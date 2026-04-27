@@ -20,7 +20,7 @@ if (useMySQL.toLowerCase() != "true") {
     });
 }
 
-const User = sequelize.define("user",
+const User = sequelize.define("users",
     {
         username: {
             type: DataTypes.STRING.BINARY,

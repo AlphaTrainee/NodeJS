@@ -5,24 +5,45 @@
     npm install mysql2
     npm install dotenv
     // import 'dotenv/config';
-    // const IP = process.env.SERVER_IP;
+    // const HOST = process.env.SERVER_HOST;
     // const PORT = process.env.SERVER_PORT;
-    
-    ODER (Windows Alias)
-    npmi
+    npm install bcrypt
 
-    Daten mariadb
-    DB:       alpha
-    User:     alpha
-    Password: service
 */
 
+/* 
+    https://sequelize.org/
+    
+    npm init -y
+    npm i --save express sequelize sqlite3 mysql2 dotenv nodemon cors 
+    npm i -D nodemon
+
+    npm run dev 
+    -> npm error Missing script: "dev"
+        -> in package.json eintragen
+            "scripts": {
+                "dev": "nodemon server.js",
+                "start": "node server.js"
+            },
+
+*/
 
 import express from "express";
+import db from "./models/user.js";
+import 'dotenv/config';
+import bcrypt from "bcrypt";
 
 const app = express();
-const IP = "127.0.0.1";
-const PORT = 3000;
+const HOST = process.env.SERVER_HOST || 'localhost';
+const PORT = process.env.SERVER_PORT || 3000;
+
+// --- MIDDLEWARE & SETTINGS ---
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.set("view engine", "ejs");
+
+// --- ROUTEN ---
+
 
 app.use(express.static("public"));
 

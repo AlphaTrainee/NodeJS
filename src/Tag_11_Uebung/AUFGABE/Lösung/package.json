@@ -1,0 +1,23 @@
+{
+  "name": "whisky-shop-admin-tool",
+  "version": "1.0.0",
+  "description": "Ein Product-Admin-Tool für einen Whisky-Shop mit Express.js REST-API",
+  "keywords": ["express", "rest", "api", "nodejs", "whisky", "shop", "admin", "product-management"],
+  "author": "Fad Gedget <fad@gadget.org>",
+  "license": "MIT",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "sequelize": "^6.6.5",
+    "sqlite3": "^5.0.2",
+    "cors": "^2.8.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Aktienkurs alfaTraining AG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+
+  <h1>Aktienkurs alfaTraining AG</h1>
+
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean non lorem sit
+    amet dolor ornare convallis. Sed ligula dolor, mattis quis metus vel, pretium
+    egestas magna. Sed hendrerit ex odio, at feugiat erat malesuada a.<br>
+    [...]<br>
+  </p>
+
+  <p>Kurs und Aktien-Info:</p>
+
+  <p>
+    Aktienkurs: $<span id="price"></span><br>
+    Handelsvolumen: <span id="volume"></span><br>
+    Zeit: <span id="time"></span><br>
+  </p>
+
+
+  <script src="./update.js"></script>
+</body>
+
+</html>
