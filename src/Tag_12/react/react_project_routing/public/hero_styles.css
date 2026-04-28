@@ -1,0 +1,39 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+header {
+    background-color: #172636;
+    color: #fff;
+    padding: 25px;
+    text-align: center;
+}
+header a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2em;
+    margin: 0 15px;
+}
+a.active {
+    color: cadetblue;
+    text-decoration: underline;
+}
+main {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #585b5e;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}

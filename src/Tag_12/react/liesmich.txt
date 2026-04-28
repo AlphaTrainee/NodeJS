@@ -1,0 +1,22 @@
+
+
+REACT
+=====
+
+npm start 
+
+
+
+https://react.dev/
+
+
+npm init -y
+
+npm i --save react react-dom react-scripts
+
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
