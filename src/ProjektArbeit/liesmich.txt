@@ -1,0 +1,64 @@
+
+/* 
+    https://sequelize.org/
+    
+    npm init -y && npm i --save express ejs sequelize sqlite3
+    npm install mysql2
+    npm install dotenv
+    // import 'dotenv/config';
+    // const HOST = process.env.SERVER_HOST;
+    // const PORT = process.env.SERVER_PORT;
+    npm install bcrypt
+
+*/
+
+/* 
+    https://sequelize.org/
+    
+    npm init -y
+    npm i --save express sequelize sqlite3 mysql2 dotenv nodemon cors 
+    npm i -D nodemon
+
+    npm run dev 
+    -> npm error Missing script: "dev"
+        -> in package.json eintragen
+            "scripts": {
+                "dev": "nodemon server.js",
+                "start": "node server.js"
+            },
+
+*/
+
+
+Backend
+=======
+
+nodejs -> installieren
+
+npm init -y
+npm i cors dotenv express ejs mysql2 nodemon sequelize sqlite3 bcrypt express-session
+
+
+
+
+
+REACT
+=====
+
+npm start 
+
+
+
+https://react.dev/
+
+
+npm init -y
+
+npm i --save react react-dom react-scripts
+
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },

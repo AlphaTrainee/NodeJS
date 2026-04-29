@@ -11,8 +11,8 @@ const Ticket = sequelize.define('Ticket', {
     allowNull: false
   },
   kategorie: {
-    type: DataTypes.STRING,
-    defaultValue: 'Standard'
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   // HIER den Namen festlegen:

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/admin_style.css">
+    <title>Kategorien verwalten</title>
+</head>
+
+<body>
+    <h1>Kategorien</h1>
+
+    <div style="margin-bottom: 20px;">
+        <a href="/admin" class="btn-edit">zur Übersicht</a>
+        <a href="/admin/kategorie/add" class="btn-add">+ Neue Kategorie anlegen</a>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Beschreibung</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% kategorien.forEach(kategorie => { %>
+                    <tr>
+                        <td><%= kategorie.name %></td>
+                        <td><%= kategorie.description %></td>
+                        <td>
+                            <a href="/admin/kategorie/edit/<%= kategorie.id %>" class="btn-edit">Bearbeiten</a>
+                            <form action="/admin/kategorie/delete/<%= kategorie.id %>" method="POST"
+                                style="display:inline;" onsubmit="return confirm('Wirklich löschen?')">
+                                <button type="submit" class="btn-del">Löschen</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

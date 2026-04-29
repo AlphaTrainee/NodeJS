@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title><%= ticket ? 'Ticket bearbeiten' : 'Neues Ticket' %></title>
+    <link rel="stylesheet" href="/admin_style.css">
+</head>
+<body>
+    <h1><%= ticket ? 'Ticket bearbeiten (ID: ' + ticket.id + ')' : 'Neues Ticket anlegen' %></h1>
+
+    <div class="card">
+        <form action="/admin/ticket/<%= ticket ? 'edit/' + ticket.id : 'add' %>" method="POST">
+            <label>Name:</label><br>
+            <input type="text" name="name" value="<%= ticket ? ticket.name : '' %>" required><br><br>
+            
+            <label>Preis (€):</label><br>
+            <input type="number" name="preis" step="0.01" value="<%= ticket ? ticket.preis : '' %>" required><br><br>
+            
+            <label>Kategorie:</label><br>
+            <select name="kategorie" required>
+                <option value="">-- Bitte wählen --</option>
+                <% categories.forEach(kat => { %>
+                    <option value="<%= kat.id %>" <%= ticket && ticket.kategorie == kat.id ? 'selected' : '' %>>
+                        <%= kat.name %>
+                    </option>
+                <% }) %>
+            </select><br><br>
+
+            <button type="submit" class="btn-add">Speichern</button>
+            <a href="/admin/ticket" class="btn-cancel">Abbrechen</a>
+        </form>
+    </div>
+</body>
+</html>

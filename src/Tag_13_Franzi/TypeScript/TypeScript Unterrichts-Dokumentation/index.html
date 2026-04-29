@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript Lernanwendung</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>TypeScript Lernanwendung</h1>
+            <p>Entdecke die Vorteile und Besonderheiten von TypeScript</p>
+        </header>
+        
+        <nav class="lesson-nav">
+            <button class="nav-btn active" data-lesson="basics">Grundlagen</button>
+            <button class="nav-btn" data-lesson="interfaces">Interfaces</button>
+            <button class="nav-btn" data-lesson="classes">Classes</button>
+            <button class="nav-btn" data-lesson="generics">Generics</button>
+            <button class="nav-btn" data-lesson="unions">Union Types</button>
+            <button class="nav-btn" data-lesson="enums">Enums</button>
+            <button class="nav-btn" data-lesson="functions">Functions</button>
+            <button class="nav-btn" data-lesson="modules">Modules</button>
+        </nav>
+
+        <main class="content">
+            <div class="lesson-panel active" id="lesson-basics">
+                <h2>TypeScript Grundlagen</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Warum TypeScript?</h3>
+                        <ul>
+                            <li><strong>Typsicherheit:</strong> Fehler werden zur Compile-Zeit erkannt</li>
+                            <li><strong>Bessere IDE-Unterstützung:</strong> IntelliSense und Auto-Vervollständigung</li>
+                            <li><strong>Selbstdokumentierender Code:</strong> Typen dienen als Dokumentation</li>
+                            <li><strong>Refactoring:</strong> Sicheres Umstrukturieren von Code</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="code-example">
+                        <h4>JavaScript vs. TypeScript:</h4>
+                        <div class="code-comparison">
+                            <div class="js-code">
+                                <h5>JavaScript (Fehleranfällig)</h5>
+                                <pre><code class="language-javascript">function addNumbers(a, b) {
+    return a + b;
+}
+
+// Laufzeit-Fehler möglich!
+console.log(addNumbers("5", 3)); // "53" statt 8
+console.log(addNumbers(5));      // NaN</code></pre>
+                            </div>
+                            
+                            <div class="ts-code">
+                                <h5>TypeScript (Typsicher)</h5>
+                                <pre><code class="language-typescript">function addNumbers(a: number, b: number): number {
+    return a + b;
+}
+
+// Compile-Fehler verhindert Laufzeit-Probleme!
+console.log(addNumbers(5, 3));   // 8
+// addNumbers("5", 3);           // Compile-Fehler
+// addNumbers(5);                // Compile-Fehler</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-area">
+                            <button id="run-basics" class="run-btn">Code ausführen</button>
+                            <div id="basics-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-interfaces">
+                <h2>Interfaces</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Was sind Interfaces?</h3>
+                        <p>Interfaces definieren die Struktur von Objekten und stellen sicher, dass bestimmte Eigenschaften vorhanden sind.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">interface Student {
+    name: string;
+    age: number;
+    courses: string[];
+    isActive?: boolean; // Optional
+}
+
+interface Teacher extends Student {
+    subject: string;
+    salary: number;
+}
+
+function printStudentInfo(student: Student): void {
+    console.log(`${student.name} ist ${student.age} Jahre alt`);
+    console.log(`Kurse: ${student.courses.join(', ')}`);
+}</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-interfaces" class="run-btn">Code ausführen</button>
+                            <div id="interfaces-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-classes">
+                <h2>Classes</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>TypeScript Classes</h3>
+                        <p>Classes bieten objektorientierte Programmierung mit Typsicherheit, Zugriffsmodifikatoren und Vererbung.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">class Vehicle {
+    protected brand: string;
+    private _speed: number = 0;
+
+    constructor(brand: string) {
+        this.brand = brand;
+    }
+
+    public get speed(): number {
+        return this._speed;
+    }
+
+    public accelerate(amount: number): void {
+        this._speed += amount;
+        console.log(`${this.brand} beschleunigt auf ${this._speed} km/h`);
+    }
+}
+
+class Car extends Vehicle {
+    private doors: number;
+
+    constructor(brand: string, doors: number) {
+        super(brand);
+        this.doors = doors;
+    }
+
+    public getInfo(): string {
+        return `${this.brand} Auto mit ${this.doors} Türen`;
+    }
+}</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-classes" class="run-btn">Code ausführen</button>
+                            <div id="classes-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-generics">
+                <h2>Generics</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Was sind Generics?</h3>
+                        <p>Generics ermöglichen es, wiederverwendbare Komponenten zu erstellen, die mit verschiedenen Typen arbeiten können.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">// Generic Function
+function identity&lt;T&gt;(arg: T): T {
+    return arg;
+}
+
+// Generic Array Function
+function getFirst&lt;T&gt;(items: T[]): T | undefined {
+    return items[0];
+}
+
+// Generic Class
+class DataStore&lt;T&gt; {
+    private items: T[] = [];
+
+    add(item: T): void {
+        this.items.push(item);
+    }
+
+    getAll(): T[] {
+        return this.items;
+    }
+
+    find(predicate: (item: T) =&gt; boolean): T | undefined {
+        return this.items.find(predicate);
+    }
+}
+
+// Generic Interface
+interface ApiResponse&lt;T&gt; {
+    data: T;
+    status: number;
+    message: string;
+}</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-generics" class="run-btn">Code ausführen</button>
+                            <div id="generics-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-unions">
+                <h2>Union Types</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Union Types</h3>
+                        <p>Union Types erlauben es einer Variable, einen von mehreren verschiedenen Typen zu haben.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">// Union Type
+type ID = string | number;
+type Status = 'loading' | 'success' | 'error';
+
+interface User {
+    id: ID;
+    name: string;
+    age: number | null;
+}
+
+function processId(id: ID): string {
+    if (typeof id === 'string') {
+        return id.toUpperCase();
+    } else {
+        return id.toString().padStart(4, '0');
+    }
+}
+
+function handleStatus(status: Status): void {
+    switch (status) {
+        case 'loading':
+            console.log('⏳ Laden...');
+            break;
+        case 'success':
+            console.log('✅ Erfolgreich!');
+            break;
+        case 'error':
+            console.log('❌ Fehler aufgetreten');
+            break;
+    }
+}</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-unions" class="run-btn">Code ausführen</button>
+                            <div id="unions-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-enums">
+                <h2>Enums</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Enumerationen</h3>
+                        <p>Enums ermöglichen es, benannten Konstanten zu definieren und den Code lesbarer zu machen.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">// Numeric Enum
+enum Direction {
+    Up,     // 0
+    Down,   // 1
+    Left,   // 2
+    Right   // 3
+}
+
+// String Enum
+enum Color {
+    Red = '#ff0000',
+    Green = '#00ff00',
+    Blue = '#0000ff'
+}
+
+// Mixed Enum
+enum ResponseCode {
+    Success = 200,
+    NotFound = 404,
+    Error = 'ERROR'
+}
+
+// Const Enum (optimiert zur Compile-Zeit)
+const enum Size {
+    Small = 'S',
+    Medium = 'M',
+    Large = 'L'
+}
+
+function move(direction: Direction): void {
+    switch (direction) {
+        case Direction.Up:
+            console.log('🔼 Nach oben bewegen');
+            break;
+        case Direction.Down:
+            console.log('🔽 Nach unten bewegen');
+            break;
+        case Direction.Left:
+            console.log('◀️ Nach links bewegen');
+            break;
+        case Direction.Right:
+            console.log('▶️ Nach rechts bewegen');
+            break;
+    }
+}</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-enums" class="run-btn">Code ausführen</button>
+                            <div id="enums-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-functions">
+                <h2>Functions</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Funktionen in TypeScript</h3>
+                        <p>TypeScript bietet erweiterte Funktionalitäten für Funktionen wie Überladungen, optionale Parameter und Typisierung.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">// Function mit optionalen Parametern
+function greet(name: string, greeting?: string): string {
+    return `${greeting || 'Hallo'} ${name}!`;
+}
+
+// Function mit Default-Parametern
+function createUser(name: string, age: number = 18): User {
+    return { id: Math.random(), name, age };
+}
+
+// Arrow Function mit Typen
+const multiply = (a: number, b: number): number => a * b;
+
+// Function Overloads
+function format(value: number): string;
+function format(value: string): string;
+function format(value: boolean): string;
+function format(value: number | string | boolean): string {
+    if (typeof value === 'number') {
+        return value.toFixed(2);
+    } else if (typeof value === 'boolean') {
+        return value ? 'Ja' : 'Nein';
+    } else {
+        return value.toUpperCase();
+    }
+}
+
+// Higher-Order Function
+function createValidator&lt;T&gt;(
+    validationFn: (value: T) => boolean
+): (value: T) => { isValid: boolean; value: T } {
+    return (value: T) => ({
+        isValid: validationFn(value),
+        value
+    });
+}</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-functions" class="run-btn">Code ausführen</button>
+                            <div id="functions-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-panel" id="lesson-modules">
+                <h2>Modules</h2>
+                <div class="lesson-content">
+                    <div class="explanation">
+                        <h3>Module System</h3>
+                        <p>TypeScript unterstützt ES6 Module für bessere Code-Organisation und Wiederverwendbarkeit.</p>
+                    </div>
+                    
+                    <div class="code-example">
+                        <pre><code class="language-typescript">// math.ts - Export verschiedener Funktionen
+export function add(a: number, b: number): number {
+    return a + b;
+}
+
+export function subtract(a: number, b: number): number {
+    return a - b;
+}
+
+export const PI = 3.14159;
+
+// Default Export
+export default class Calculator {
+    private history: number[] = [];
+
+    calculate(operation: string, a: number, b: number): number {
+        let result: number;
+        switch (operation) {
+            case '+':
+                result = add(a, b);
+                break;
+            case '-':
+                result = subtract(a, b);
+                break;
+            default:
+                throw new Error('Unbekannte Operation');
+        }
+        this.history.push(result);
+        return result;
+    }
+
+    getHistory(): number[] {
+        return [...this.history];
+    }
+}
+
+// app.ts - Import und Verwendung
+// import Calculator, { add, PI } from './math';
+// import * as MathUtils from './math';</code></pre>
+                        
+                        <div class="interactive-area">
+                            <button id="run-modules" class="run-btn">Code ausführen</button>
+                            <div id="modules-output" class="output"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <p>TypeScript Lernanwendung - Entwickelt für den Unterricht</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script type="module" src="src/app.ts"></script>
+</body>
+</html>

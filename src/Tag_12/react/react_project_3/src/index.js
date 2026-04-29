@@ -6,6 +6,7 @@ const App = () =>
         <div><ItemNoInput /> Jessica Jones</div>
         <div><ItemNoInput /> Luke Cage</div>
         <div><ItemNoInput /> Daredevil</div>
+
     </div>;
 
 ReactDom.createRoot(document.getElementById('root'))

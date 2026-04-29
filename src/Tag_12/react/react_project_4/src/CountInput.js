@@ -1,3 +1,4 @@
+
 export const CountInput = (props) => {
 
     const changeVal = (ev) => {
@@ -6,12 +7,10 @@ export const CountInput = (props) => {
         props.setCount(newVal);
     };
 
-    return (
-        <input
+    return <input
             type="number"
-            style={{ width: "50px", color: "cadetblue" }}
-            value={props.count}
-            onChange={changeVal}
-        />
-    );
+            style = {{ width: "50px", color: "cadetblue" }}
+            value = { props.count }
+            onChange = { changeVal }
+        />;
 };
