@@ -8,8 +8,10 @@
 <body>
     <h1><%= kategorie ? 'Kategorie bearbeiten (ID: ' + kategorie.id + ')' : 'Neue Kategorie anlegen' %></h1>
 
+    <%- include('../partials/error-box') %>
+
     <div class="card">
-        <form action="/admin/kategorie/<%= kategorie ? 'edit/' + kategorie.id : 'add' %>" method="POST">
+        <form action="/admin/kategorien/<%= kategorie ? 'edit/' + kategorie.id : 'add' %>" method="POST">
             <label>Name:</label><br>
             <input type="text" name="name" value="<%= kategorie ? kategorie.name : '' %>" required><br><br>
             
@@ -17,7 +19,7 @@
             <input type="text" name="description" value="<%= kategorie ? kategorie.description : '' %>"><br><br>
 
             <button type="submit" class="btn-add">Speichern</button>
-            <a href="/admin/kategorie" class="btn-cancel">Abbrechen</a>
+            <a href="/admin/kategorien" class="btn-cancel">Abbrechen</a>
         </form>
     </div>
 </body>

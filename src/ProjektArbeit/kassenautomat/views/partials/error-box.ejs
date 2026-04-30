@@ -1,0 +1,21 @@
+<% if (locals.error) { %>
+    <div class="alert-error">
+        <strong><%= error %></strong>
+
+        <% if (locals.err) { 
+            const errorCode = locals.err.parent?.errno || locals.err.name;
+        %>
+            <p>Code: <%= errorCode %></p>
+
+            <% if (locals.err.name === 'SequelizeValidationError' || locals.err.name === 'SequelizeUniqueConstraintError') { %>
+                <ul style="margin-top: 10px;">
+                    <% locals.err.errors.forEach(function(detail) { %>
+                        <li><strong><%= detail.path %>:</strong> <%= detail.message %></li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>Meldung: <%= locals.err.message %></p>
+            <% } %>
+        <% } %>
+    </div>
+<% } %>

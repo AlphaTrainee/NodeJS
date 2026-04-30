@@ -10,8 +10,10 @@
 
     <div style="margin-bottom: 20px;">
         <a href="/admin" class="btn-edit">zur Übersicht</a>
-        <a href="/admin/ticket/add" class="btn-add">+ Neues Ticket anlegen</a>
+        <a href="/admin/tickets/add" class="btn-add">+ Neues Ticket anlegen</a>
     </div>
+
+    <%- include('../partials/error-box') %>
 
     <div class="card">
         <table>
@@ -32,8 +34,8 @@
                     <td><%= ticket.preis.toFixed(2) %></td>
                     <td><%= ticket.Kategorie ? ticket.Kategorie.name : 'Keine Kategorie' %></td>
                     <td>
-                        <a href="/admin/ticket/edit/<%= ticket.id %>" class="btn-edit">Bearbeiten</a> 
-                        <form action="/admin/ticket/delete/<%= ticket.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Wirklich löschen?')">
+                        <a href="/admin/tickets/edit/<%= ticket.id %>" class="btn-edit">Bearbeiten</a> 
+                        <form action="/admin/tickets/delete/<%= ticket.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Wirklich löschen?')">
                             <button type="submit" class="btn-del">Löschen</button>
                         </form>
                     </td>

@@ -12,8 +12,10 @@
 
     <div style="margin-bottom: 20px;">
         <a href="/admin" class="btn-edit">zur Übersicht</a>
-        <a href="/admin/kategorie/add" class="btn-add">+ Neue Kategorie anlegen</a>
+        <a href="/admin/kategorien/add" class="btn-add">+ Neue Kategorie anlegen</a>
     </div>
+
+    <%- include('../partials/error-box') %>
 
     <div class="card">
         <table>
@@ -30,8 +32,8 @@
                         <td><%= kategorie.name %></td>
                         <td><%= kategorie.description %></td>
                         <td>
-                            <a href="/admin/kategorie/edit/<%= kategorie.id %>" class="btn-edit">Bearbeiten</a>
-                            <form action="/admin/kategorie/delete/<%= kategorie.id %>" method="POST"
+                            <a href="/admin/kategorien/edit/<%= kategorie.id %>" class="btn-edit">Bearbeiten</a>
+                            <form action="/admin/kategorien/delete/<%= kategorie.id %>" method="POST"
                                 style="display:inline;" onsubmit="return confirm('Wirklich löschen?')">
                                 <button type="submit" class="btn-del">Löschen</button>
                             </form>

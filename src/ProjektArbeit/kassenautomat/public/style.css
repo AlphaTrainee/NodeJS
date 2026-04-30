@@ -1,0 +1,119 @@
+body { 
+    font-family: sans-serif; 
+    margin: 40px; 
+    background: #f4f4f4; 
+}
+
+.card { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    margin-bottom: 20px; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+th, td { 
+    padding: 12px; 
+    border-bottom: 1px solid #ddd; 
+    text-align: left; 
+}
+
+th { 
+    background: #333; 
+    color: white; 
+}
+
+form { 
+    display: inline; 
+}
+
+/* KORREKTUR: Hier werden die Felder im Formular breit */
+input[type="text"], 
+input[type="password"], 
+textarea, 
+select { 
+    width: 100%;           /* Macht das Feld breit */
+    padding: 10px; 
+    margin: 10px 0;       /* Abstand nach oben/unten */
+    display: block;        /* Sorgt dafür, dass sie untereinander stehen */
+    box-sizing: border-box; /* Damit 100% nicht über den Rand ragen */
+}
+
+input[type="number"] {
+    width: 150px;           /* Macht das Feld breit */
+    padding: 10px; 
+    margin: 10px 0;       /* Abstand nach oben/unten */
+    display: block;        /* Sorgt dafür, dass sie untereinander stehen */
+    box-sizing: border-box; /* Damit 100% nicht über den Rand ragen */
+}
+
+.btn-add, .btn-edit, .btn-del, .btn-cancel {
+    display: inline-block;    /* WICHTIG: Damit beide die gleiche Box-Logik haben */
+    padding: 10px 20px;       /* Identischer Innenabstand */
+    font-size: 16px;          /* Identische Schriftgröße */
+    font-family: sans-serif;  /* Identische Schriftart */
+    text-decoration: none;    /* Entfernt Unterstrich beim Link */
+    text-align: center;       /* Zentriert den Text */
+    border: none;             /* Entfernt Standard-Rahmen beim Button */
+    cursor: pointer;          /* Zeigt bei beiden die Hand */
+    line-height: normal;      /* Vereinheitlicht die Texthöhe */
+    vertical-align: middle;   /* Falls sie nebeneinander stehen */
+}
+
+/* Die spezifischen Farben bleiben */
+.btn-add {
+    background: #008800;
+    color: white;
+}
+
+.btn-edit {
+    background: #000088;
+    color: white;
+}
+
+.btn-cancel {
+    background: #666;
+    color: white;
+}
+
+.btn-del { 
+    background: #cc0000;
+    color: white; 
+}
+
+/* Optional: Ein kleiner Effekt beim Drüberfahren, damit es sich nach Button anfühlt */
+.btn-add:hover, .btn-edit:hover, .btn-cancel:hover, .btn-del:hover {
+    filter: brightness(1.1);
+}
+
+.login-card {
+    max-width: 400px;
+    margin: 100px auto;
+}
+
+.alert-error {
+    color: #a00;
+    background: #fdd;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+.inline-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-actions {
+    margin-top: 20px;
+}

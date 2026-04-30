@@ -11,7 +11,7 @@ const sequelize = isMysql
     })
   : new Sequelize({
       dialect: 'sqlite',
-      storage: './database.sqlite',
+      storage: './database/database.sqlite',
       logging: false,
     });
 

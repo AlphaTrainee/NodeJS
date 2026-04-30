@@ -12,11 +12,30 @@ const AdminUser = sequelize.define('AdminUser', {
     username: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        validate: {
+            notEmpty: { msg: "Benutzername darf nicht leer sein." },
+            len: {
+                args: [3, 20],
+                msg: "Der Benutzername muss zwischen 3 und 20 Zeichen lang sein."
+            },
+            // Verhindert Sonderzeichen, erlaubt nur Buchstaben und Zahlen
+            isAlphanumeric: {
+                msg: "Der Benutzername darf nur aus Buchstaben und Zahlen bestehen."
+            }
+        }
     },
     password: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notEmpty: { msg: "Passwort darf nicht leer sein." },
+            // Erzwingt eine Mindestlänge vor dem Hashing
+            len: {
+                args: [6, 100],
+                msg: "Das Passwort muss mindestens 6 Zeichen lang sein."
+            }
+        }
     }
 }, {
     tableName: 'ka_users',

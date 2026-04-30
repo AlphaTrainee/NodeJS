@@ -16,6 +16,7 @@ import adminRoutes from './routes/adminRoutes.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
@@ -40,6 +41,24 @@ app.use(express.static('public'));
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/admin', adminRoutes);
+
+// um Fehler zu triggern
+app.get('/test/error', (req, res) => {
+    console.log(`Triggert einen Error 500`);
+    throw new Error("Das ist ein Test-Fehler!");
+    return;
+});
+
+app.use((req, res) => {
+    res.status(404)
+        .render('error', { error: `Diese Route ${ req.originalUrl } existiert nicht`, err: null });
+})
+
+// Globales Error Handling (500-Fehler)
+app.use((err, req, res, next) => {
+    res.status(500)
+        .render('error', { error: `Ein unerwarteter Fehler ist aufgetreten`, err });
+});
 
 const PORT = process.env.SERVER_PORT || 3000;
 const HOST = process.env.SERVER_HOST || 'localhost';

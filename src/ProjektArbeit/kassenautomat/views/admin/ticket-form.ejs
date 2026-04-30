@@ -8,8 +8,10 @@
 <body>
     <h1><%= ticket ? 'Ticket bearbeiten (ID: ' + ticket.id + ')' : 'Neues Ticket anlegen' %></h1>
 
+    <%- include('../partials/error-box') %>
+
     <div class="card">
-        <form action="/admin/ticket/<%= ticket ? 'edit/' + ticket.id : 'add' %>" method="POST">
+        <form action="/admin/tickets/<%= ticket ? 'edit/' + ticket.id : 'add' %>" method="POST">
             <label>Name:</label><br>
             <input type="text" name="name" value="<%= ticket ? ticket.name : '' %>" required><br><br>
             
@@ -27,7 +29,7 @@
             </select><br><br>
 
             <button type="submit" class="btn-add">Speichern</button>
-            <a href="/admin/ticket" class="btn-cancel">Abbrechen</a>
+            <a href="/admin/tickets" class="btn-cancel">Abbrechen</a>
         </form>
     </div>
 </body>
