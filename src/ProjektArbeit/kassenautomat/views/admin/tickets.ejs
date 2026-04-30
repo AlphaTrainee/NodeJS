@@ -20,6 +20,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th class="center-td">Sichtbar</th>
                     <th>Name</th>
                     <th>Preis (€)</th>
                     <th>Kategorie</th>
@@ -30,9 +31,27 @@
                 <% tickets.forEach(ticket => { %>
                 <tr>
                     <td><%= ticket.id %></td>
+                    <td class="center-td">
+                        <% if (ticket.visible) { %>
+                            <span class="visible icon">✔</span>
+                        <% } else { %>
+                            <span class="hidden icon">✘</span>
+                        <% } %>
+                    </td>
                     <td><%= ticket.name %></td>
                     <td><%= ticket.preis.toFixed(2) %></td>
-                    <td><%= ticket.Kategorie ? ticket.Kategorie.name : 'Keine Kategorie' %></td>
+                    <td>
+                        <% if (ticket.Kategorie) { %>
+                            <% if (ticket.Kategorie.visible) { %>
+                                <span class="visible">
+                            <% } else { %>
+                                <span class="hidden">
+                            <% } %>
+                            <%= ticket.Kategorie.name %>
+                        <% } else { %>
+                            Keine Kategorie
+                        <% } %>
+                    </td>
                     <td>
                         <a href="/admin/tickets/edit/<%= ticket.id %>" class="btn-edit">Bearbeiten</a> 
                         <form action="/admin/tickets/delete/<%= ticket.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Wirklich löschen?')">

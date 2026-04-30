@@ -34,6 +34,11 @@ const Ticket = sequelize.define('Ticket', {
         msg: "Ungültige Kategorie-ID."
       }
     }
+  },
+  visible: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 }, {
   // HIER den Namen festlegen:

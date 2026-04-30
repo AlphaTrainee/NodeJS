@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/frontend_style.css">
+    <title>Kategorie wählen</title>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <%- include('../partials/frontend-nav') %>
+
+    <div class="content-container">
+    <% if (bestsellers && bestsellers.length > 0) { %>
+        <h2 style="color: var(--primary);">Oft gekauft</h2>
+        <div class="bestseller-grid">
+            <% bestsellers.forEach(item => { %>
+                <!-- Hier bauen wir einen Button, der direkt in den Warenkorb führt -->
+                <a href="/cart/add-by-name?name=<%= encodeURIComponent(item.ticketName) %>" class="bestseller-item">
+                    <span class="star">★</span>
+                    <span class="name"><%= item.ticketName %></span>
+                </a>
+            <% }) %>
+        </div>
+        <hr style="margin: 30px 0; opacity: 0.2;">
+    <% } %>
+
+    <h2>Alle Kategorien</h2>
+        
+        <div class="touch-grid">
+            <% kategorien.forEach(kat => { %>
+                <a href="/tickets/<%= kat.id %>" class="touch-button">
+                    <%= kat.name %>
+                    <% if(kat.description) { %>
+                        <span class="description"><%= kat.description %></span>
+                    <% } %>
+                </a>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>

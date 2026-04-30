@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/frontend_style.css">
+    <title>Warenkorb</title>
+</head>
+<body>
+    <%- include('../partials/frontend-nav') %>
+
+    <div class="content-container">
+        <h2>Ihre Auswahl</h2>
+
+        <div class="cart-list">
+            <% if (cart.length > 0) { %>
+                <% cart.forEach((item, index) => { %>
+                    <div class="cart-item">
+                        <span class="item-details">
+                            <span class="qty"><%= item.quantity %>x</span> 
+                            <%= item.name %>
+                        </span>
+                        
+                        <div class="item-controls">
+                            <strong><%= (Number(item.preis) * Number(item.quantity)).toFixed(2) %> €</strong>
+                            <a href="/cart/remove/<%= item.id %>" class="btn-remove">−</a>
+                        </div>
+                    </div>
+                <% }) %>
+
+                <div class="total-row">
+                    <span>Gesamtsumme:</span>
+                    <span class="total-price"><%= total.toFixed(2) %> €</span>
+                </div>
+
+                <div class="touch-grid">
+                    <a href="/checkout" class="touch-button pay-btn">
+                        JETZT BEZAHLEN
+                    </a>
+                    <a href="/kategorien" class="touch-button alt-btn">
+                        WEITERE TICKETS
+                    </a>
+                </div>
+            <% } else { %>
+                <p>Ihr Warenkorb ist leer.</p>
+                <a href="/kategorien" class="btn-secondary">Zurück zur Auswahl</a>
+            <% } %>
+        </div>
+
+        <div class="action-footer">
+            <a href="/cart/clear" class="btn-abort">Vorgang abbrechen</a>
+        </div>
+    </div>
+</body>
+</html>

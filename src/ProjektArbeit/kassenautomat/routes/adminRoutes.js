@@ -3,6 +3,11 @@ import Ticket from '../models/Ticket.js';
 import Kategorie from '../models/Kategorie.js';
 import AdminUser from '../models/AdminUser.js';
 import bcrypt from 'bcrypt';
+import SoldTicket from '../models/SoldTicket.js';
+import Sale from '../models/Sale.js';
+
+Sale.hasMany(SoldTicket, { foreignKey: 'saleId' });
+SoldTicket.belongsTo(Sale, { foreignKey: 'saleId' });
 
 Ticket.belongsTo(Kategorie, { foreignKey: 'kategorie' });
 Kategorie.hasMany(Ticket, { foreignKey: 'kategorie' });
@@ -121,13 +126,15 @@ router.get('/tickets/edit/:id', auth, async (req, res) => {
 // --- TICKET POST AKTIONEN ---
 router.post('/tickets/add', auth, async (req, res) => {
     try {
+        req.body.visible = req.body.visible === 'on';
         await Ticket.create(req.body);
         res.redirect('/admin/tickets');
     } catch (err) {
         const categories = await Kategorie.findAll();
 
         const dataFromForm = {
-            ...req.body
+            ...req.body,
+            visible: !!req.body.visible
         };
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
@@ -140,6 +147,7 @@ router.post('/tickets/add', auth, async (req, res) => {
 
 router.post('/tickets/edit/:id', auth, async (req, res) => {
     try {
+        req.body.visible = req.body.visible === 'on';
         await Ticket.update(req.body, { where: { id: req.params.id } });
         res.redirect('/admin/tickets');
     } catch (err) {
@@ -147,7 +155,7 @@ router.post('/tickets/edit/:id', auth, async (req, res) => {
 
         const dataFromForm = {
             ...req.body,
-            id: req.params.id
+            visible: !!req.body.visible
         };
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
@@ -195,11 +203,13 @@ router.get('/kategorien/add', auth, async (req, res) => {
 // Neue Kategorie speichern
 router.post('/kategorien/add', auth, async (req, res) => {
     try {
+        req.body.visible = req.body.visible === 'on';
         await Kategorie.create(req.body);
         res.redirect('/admin/kategorien');
     } catch (err) {
         const dataFromForm = {
-            ...req.body
+            ...req.body,
+            visible: !!req.body.visible
         };
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
@@ -226,12 +236,13 @@ router.get('/kategorien/edit/:id', auth, async (req, res) => {
 
 router.post('/kategorien/edit/:id', auth, async (req, res) => {
     try {
+        req.body.visible = req.body.visible === 'on';
         await Kategorie.update(req.body, { where: { id: req.params.id } });
         res.redirect('/admin/kategorien');
     } catch (err) {
         const dataFromForm = {
             ...req.body,
-            id: req.params.id
+            visible: !!req.body.visible
         };
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
@@ -277,5 +288,27 @@ const handleDeleteKategorie = async (req, res) => {
 // Kategorie löschen
 router.get('/kategorien/delete/:id', auth, handleDeleteKategorie);
 router.post('/kategorien/delete/:id', auth, handleDeleteKategorie);
+
+// Alle Verkäufe anzeigen
+router.get('/sales', async (req, res) => {
+    try {
+        const sales = await Sale.findAll({
+            include: [SoldTicket], // Lädt die zugehörigen Tickets mit
+            order: [['createdAt', 'DESC']] // Neueste Verkäufe zuerst
+        });
+
+        // Optional: Gesamtsumme aller Verkäufe berechnen
+        const grandTotal = sales.reduce((sum, s) => sum + parseFloat(s.totalAmount), 0);
+
+        res.render('admin/sales', { 
+            sales, 
+            grandTotal,
+            layout: 'admin/layout' // Falls du ein Admin-Layout nutzt
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Fehler beim Laden der Verkaufsdaten");
+    }
+});
 
 export default router;

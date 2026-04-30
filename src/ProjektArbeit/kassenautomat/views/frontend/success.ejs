@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/frontend_style.css">
+    <title>Vielen Dank</title>
+</head>
+<body>
+    <div class="content-container">
+        <div class="success-card">
+            <div class="check-icon">✔</div>
+            <h1>Zahlung erfolgt</h1>
+            <p>Vielen Dank für Ihren Einkauf.</p>
+            
+            <hr>
+            
+            <div class="ticket-list-final">
+                <% tickets.forEach(ticket => { %>
+                    <div class="ticket-stub">
+                        <span class="stub-name"><%= ticket.ticketName %></span>
+                        <code class="stub-id"><%= ticket.id.substring(0, 8) %>...</code>
+                    </div>
+                <% }) %>
+            </div>
+
+            <p class="hint">Bitte entnehmen Sie Ihre Tickets am Ausgabefach.</p>
+
+            <a href="/" class="touch-button" style="margin-top: 30px; background-color: var(--primary);">
+                ZURÜCK ZUM START
+            </a>
+        </div>
+    </div>
+</body>
+</html>

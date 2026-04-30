@@ -28,8 +28,15 @@
                 <% }) %>
             </select><br><br>
 
-            <button type="submit" class="btn-add">Speichern</button>
-            <a href="/admin/tickets" class="btn-cancel">Abbrechen</a>
+            <label>
+                <input type="checkbox" name="visible" <%= (ticket === null || ticket.visible) ? 'checked' : '' %>>
+                Im Frontend anzeigen
+            </label><br><br>
+
+            <div class="btn-submit">
+                <button type="submit" class="btn-add">Speichern</button>
+                <a href="/admin/tickets" class="btn-cancel">Abbrechen</a>
+            </div>
         </form>
     </div>
 </body>

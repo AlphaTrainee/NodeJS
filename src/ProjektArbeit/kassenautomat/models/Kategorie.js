@@ -36,6 +36,11 @@ const Kategorie = sequelize.define('Kategorie', {
         msg: "Die Beschreibung darf maximal 255 Zeichen lang sein."
       }
     }
+  },
+  visible: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: true
   }
 }, {
   // Tabellenname nach deinem Schema

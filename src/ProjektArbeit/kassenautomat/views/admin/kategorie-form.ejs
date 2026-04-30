@@ -18,8 +18,15 @@
             <label>Beschreibung:</label><br>
             <input type="text" name="description" value="<%= kategorie ? kategorie.description : '' %>"><br><br>
 
-            <button type="submit" class="btn-add">Speichern</button>
-            <a href="/admin/kategorien" class="btn-cancel">Abbrechen</a>
+            <label>
+                <input type="checkbox" name="visible" <%= (kategorie === null || kategorie.visible) ? 'checked' : '' %>>
+                Im Frontend anzeigen
+            </label><br><br>
+
+            <div class="btn-submit">
+                <button type="submit" class="btn-add">Speichern</button>
+                <a href="/admin/kategorien" class="btn-cancel">Abbrechen</a>
+            </div>
         </form>
     </div>
 </body>

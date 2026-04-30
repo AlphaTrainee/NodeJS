@@ -21,6 +21,8 @@
         <table>
             <thead>
                 <tr>
+                    <th>ID</th>
+                    <th class="center-td">Sichtbar</th>
                     <th>Name</th>
                     <th>Beschreibung</th>
                     <th>Aktion</th>
@@ -29,6 +31,14 @@
             <tbody>
                 <% kategorien.forEach(kategorie => { %>
                     <tr>
+                        <td><%= kategorie.id %></td>
+                        <td class="center-td">
+                            <% if (kategorie.visible) { %>
+                                <span class="visible icon">✔</span>
+                            <% } else { %>
+                                <span class="hidden icon">✘</span>
+                            <% } %>
+                        </td>
                         <td><%= kategorie.name %></td>
                         <td><%= kategorie.description %></td>
                         <td>

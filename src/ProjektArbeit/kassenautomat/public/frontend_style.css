@@ -1,0 +1,349 @@
+:root {
+    --primary: #007bff;
+    --dark: #212529;
+    --light: #f8f9fa;
+    --success: #28a745;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: sans-serif;
+    background-color: var(--dark);
+    color: white;
+    overflow: hidden; /* Verhindert Scrollen am Kiosk */
+}
+
+/* Obere Navigation */
+.top-nav {
+    display: flex;
+    justify-content: space-around;
+    background: #111;
+    padding: 20px;
+    border-bottom: 2px solid var(--primary);
+}
+
+.nav-item {
+    color: #555;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.nav-item.active {
+    color: var(--primary);
+}
+
+/* Container für den Content */
+.content-container {
+    padding: 20px;
+    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Button Grid: 2 Spalten */
+.touch-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+/* Große Touch Buttons */
+.touch-button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 40px 20px;
+    font-size: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.1s;
+}
+
+.touch-button:active {
+    transform: scale(0.95);
+    background: #0056b3;
+}
+
+.description {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
+/* Vollbild-Startseite */
+.welcome-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+/* Spezifisches Styling für Tickets */
+.ticket-btn {
+    background: #ffffff;
+    color: var(--dark);
+    border: 3px solid var(--primary);
+}
+
+.ticket-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.ticket-price {
+    font-size: 1.8rem;
+    color: var(--primary);
+    font-weight: 900;
+}
+
+/* Sekundärer Button (z.B. Zurück) */
+.btn-secondary {
+    display: block;
+    text-align: center;
+    background: #6c757d;
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+.btn-secondary:active {
+    background: #5a6268;
+}
+
+/* Navigation klickbar machen */
+.nav-item {
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.nav-item:not(.active) {
+    color: #bbb; /* Etwas heller als vorher, damit man sieht, dass man zurück kann */
+}
+
+/* Warenkorb-Elemente */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    background: #333;
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    border-top: 2px solid var(--primary);
+    margin-top: 20px;
+}
+
+.total-price {
+    color: var(--success);
+}
+
+.pay-btn {
+    background: var(--success) !important;
+    font-weight: bold;
+}
+
+.alt-btn {
+    background: #444 !important;
+}
+
+.btn-cancel-touch {
+    margin-top: 40px;
+    color: #ff4444;
+    text-decoration: none;
+    font-size: 1rem;
+    border-bottom: 1px solid #ff4444;
+}
+
+.success-box {
+    text-align: center;
+    background: #fff;
+    color: #333;
+    padding: 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.ticket-receipt {
+    border: 2px dashed #ccc;
+    padding: 15px;
+    margin-top: 10px;
+    background: #f9f9f9;
+    color: #000;
+}
+
+.cart-badge {
+    background-color: var(--success);
+    color: white;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.nav-item.disabled {
+    color: #444; /* Dunkelgrau/Deaktiviert */
+    pointer-events: none; /* Nicht anklickbar */
+    opacity: 0.5;
+}
+
+/* Der Abbrechen-Button */
+.btn-abort {
+    display: inline-block;
+    margin-top: 50px;
+    padding: 12px 25px;
+    background-color: transparent;
+    color: #888; /* Dezentes Grau */
+    border: 2px solid #444; /* Dunkler Rahmen */
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Feedback beim Berühren (Touch) */
+.btn-abort:active {
+    background-color: #ff4444; /* Wird beim Drücken rot */
+    border-color: #ff4444;
+    color: white;
+}
+
+.success-card {
+    background: white;
+    color: #333;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 500px;
+}
+
+.check-icon {
+    font-size: 4rem;
+    color: var(--success);
+    margin-bottom: 10px;
+}
+
+.ticket-stub {
+    background: #f0f0f0;
+    margin: 10px 0;
+    padding: 15px;
+    border-left: 5px solid var(--success);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.stub-name {
+    font-weight: bold;
+}
+
+.stub-id {
+    font-size: 0.8rem;
+    color: #666;
+    background: #ddd;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.hint {
+    font-style: italic;
+    color: #777;
+    margin-top: 20px;
+}
+
+.bestseller-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.bestseller-item {
+    background: linear-gradient(135deg, #444, #222);
+    border: 2px solid var(--primary);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+
+.bestseller-item .star {
+    display: block;
+    color: gold;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.cart-list {
+    width: 100%;
+    max-width: 600px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item-details {
+    display: flex;
+    gap: 10px;
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-remove {
+    color: #ff4444;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border: 1px solid #ff4444;
+    border-radius: 5px;
+}
+
+.touch-grid {
+    margin-top: 30px;
+}
+
+.action-footer {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+}

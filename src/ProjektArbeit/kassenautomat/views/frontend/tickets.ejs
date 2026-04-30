@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/frontend_style.css">
+    <title>Ticket wählen</title>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <%- include('../partials/frontend-nav') %>
+
+    <div class="content-container">
+        <h2>Welches Ticket benötigen Sie?</h2>
+        
+        <div class="touch-grid">
+            <% if (tickets.length > 0) { %>
+                <% tickets.forEach(ticket => { %>
+                    <!-- Link zum Hinzufügen in den Warenkorb (Logik folgt später) -->
+                    <a href="/cart/add/<%= ticket.id %>" class="touch-button ticket-btn">
+                        <span class="ticket-name"><%= ticket.name %></span>
+                        <span class="ticket-price"><%= ticket.preis.toFixed(2) %> €</span>
+                    </a>
+                <% }) %>
+            <% } else { %>
+                <p>Momentan sind keine Tickets in dieser Kategorie verfügbar.</p>
+            <% } %>
+        </div>
+
+        <!-- Großer Zurück-Button am unteren Rand -->
+        <div style="margin-top: auto; width: 100%; max-width: 800px;">
+            <a href="/kategorien" class="btn-secondary">← Zurück zur Auswahl</a>
+        </div>
+    </div>
+</body>
+</html>
