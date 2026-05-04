@@ -11,7 +11,6 @@ import { fileURLToPath } from 'url';
 // Routen importieren
 import frontendRoutes from './routes/frontendRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
-import paymentRoutes from './routes/paymentRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -60,7 +59,6 @@ app.use(express.static('public'));
 // Routen registrieren
 app.use('/', frontendRoutes);
 app.use('/api/tickets', ticketRoutes);
-app.use('/api/payment', paymentRoutes);
 app.use('/admin', adminRoutes);
 
 app.use((req, res) => {
@@ -83,6 +81,7 @@ sequelize.sync().then(() => {
     console.log(`Server läuft auf http://${HOST}:${PORT}`);
     console.log(`Rest-API: http://${HOST}:${PORT}/api/tickets`);
     console.log(`Backend: http://${HOST}:${PORT}/admin`);
+    console.log(`Dokumentation: http://${HOST}:${PORT}/doc`);
   });
 }).catch(err => {
   console.error('Datenbankverbindung fehlgeschlagen:', err);

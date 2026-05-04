@@ -455,6 +455,10 @@ router.get('/timeout', (req, res) => {
     res.render('frontend/timeout');
 });
 
+router.get('/doc', (req, res) => {
+    res.render('frontend/doc');
+});
+
 // um Fehler zu triggern
 router.get('/test/error', (req, res) => {
     console.log(`Triggert einen Error 500`);

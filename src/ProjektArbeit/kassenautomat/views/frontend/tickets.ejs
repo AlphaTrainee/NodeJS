@@ -17,7 +17,6 @@
         <div class="touch-grid">
             <% if (tickets.length > 0) { %>
                 <% tickets.forEach(ticket => { %>
-                    <!-- Link zum Hinzufügen in den Warenkorb (Logik folgt später) -->
                     <a href="/cart/add/<%= ticket.id %>" class="touch-button ticket-btn">
                         <span class="ticket-name"><%= ticket.name %></span>
                         <span class="ticket-price"><%= ticket.preis.toFixed(2) %> €</span>
