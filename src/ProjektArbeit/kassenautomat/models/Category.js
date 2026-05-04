@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../database/db.js';
 
-const Kategorie = sequelize.define('Kategorie', {
+const Category = sequelize.define('Category', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -49,4 +49,4 @@ const Kategorie = sequelize.define('Kategorie', {
   freezeTableName: true
 });
 
-export default Kategorie;
+export default Category;

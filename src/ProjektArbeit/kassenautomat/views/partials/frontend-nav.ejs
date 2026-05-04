@@ -1,12 +1,12 @@
 <!-- <%= JSON.stringify(locals) %> -->
 
 <nav class="top-nav">
-    <!-- Kategorien sind immer klickbar -->
-    <a href="/categories" class="nav-item <%= currentPage === 'kategorien' ? 'active' : '' %>">
+    <!-- Categories sind immer klickbar -->
+    <a href="/categories" class="nav-item <%= currentPage === 'categories' ? 'active' : '' %>">
         Kategorien
     </a>
 
-    <!-- Tickets nur klickbar, wenn man in einer Kategorie ist (oder schon Items hat) -->
+    <!-- Tickets nur klickbar, wenn man in einer Category ist (oder schon Items hat) -->
     <% if ( session && session.CategoryName && session.CategoryId ) { %>
         <a href="/categories/<%= session.CategoryId %>" class="nav-item <%= currentPage === 'tickets' ? 'active' : '' %>">Tickets (<%= session.CategoryName %>)</a>
     <% } else { %>

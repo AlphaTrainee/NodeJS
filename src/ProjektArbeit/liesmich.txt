@@ -1,4 +1,7 @@
 
+für das Automatisierte Konvertieren von *.md nach *.ejs (html)
+wird das vsCode Plugin "Save and Run" von "wk-j" genutzt
+
 /* 
     https://sequelize.org/
     
@@ -9,6 +12,8 @@
     // const HOST = process.env.SERVER_HOST;
     // const PORT = process.env.SERVER_PORT;
     npm install bcrypt
+
+    npm install --save-dev markdown-it
 
 */
 

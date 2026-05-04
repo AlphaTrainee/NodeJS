@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import sequelize from './database/db.js';
 import Ticket from './models/Ticket.js';
-import Kategorie from './models/Kategorie.js';
+import Category from './models/Category.js';
 import AdminUser from './models/AdminUser.js';
 import SoldTicket from './models/SoldTicket.js';
 import Sale from './models/Sale.js'; // Import der Verkaufs-Tabelle
@@ -19,7 +19,7 @@ const seedDatabase = async () => {
       { username: 'developer', password: 'service' }
     ];
 
-    const kategorienData = [
+    const categoriesData = [
       { name: 'Standard', description: 'Normale Einzeltickets', visible: true },
       { name: 'Ermäßigt', description: 'Für Kinder, Schüler und Studenten', visible: true },
       { name: 'Gruppe', description: 'Tickets für mehrere Personen', visible: true },
@@ -28,10 +28,10 @@ const seedDatabase = async () => {
     ];
 
     const ticketData = [
-      { name: 'Einzelticket Erwachsen', preis: 8.50, kategorie: 1, visible: true },
-      { name: 'Einzelticket Kind', preis: 4.50, kategorie: 2, visible: true },
-      { name: 'Familienticket', preis: 22.00, kategorie: 3, visible: true },
-      { name: 'Wochenend-Pass', preis: 15.00, kategorie: 4, visible: true }
+      { name: 'Einzelticket Erwachsen', preis: 8.50, category: 1, visible: true },
+      { name: 'Einzelticket Kind', preis: 4.50, category: 2, visible: true },
+      { name: 'Familienticket', preis: 22.00, category: 3, visible: true },
+      { name: 'Wochenend-Pass', preis: 15.00, category: 4, visible: true }
     ];
 
     // --- 2. SEEDING FUNKTION ---
@@ -46,7 +46,7 @@ const seedDatabase = async () => {
     };
 
     await seedMissing(AdminUser, adminData, 'username', { individualHooks: true });
-    await seedMissing(Kategorie, kategorienData, 'name');
+    await seedMissing(Category, categoriesData, 'name');
     await seedMissing(Ticket, ticketData, 'name');
 
     // --- 3. VERKÄUFE GENERIEREN (Damit Bestseller Daten haben) ---

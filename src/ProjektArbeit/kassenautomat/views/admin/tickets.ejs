@@ -23,7 +23,7 @@
                     <th class="center-td">Sichtbar</th>
                     <th>Name</th>
                     <th>Preis (€)</th>
-                    <th>Kategorie</th>
+                    <th>Category</th>
                     <th>Aktionen</th>
                 </tr>
             </thead>
@@ -41,15 +41,15 @@
                     <td><%= ticket.name %></td>
                     <td><%= ticket.preis.toFixed(2) %></td>
                     <td>
-                        <% if (ticket.Kategorie) { %>
-                            <% if (ticket.Kategorie.visible) { %>
+                        <% if (ticket.Category) { %>
+                            <% if (ticket.Category.visible) { %>
                                 <span class="visible">
                             <% } else { %>
                                 <span class="hidden">
                             <% } %>
-                            <%= ticket.Kategorie.name %>
+                            <%= ticket.Category.name %>
                         <% } else { %>
-                            Keine Kategorie
+                            Keine Category
                         <% } %>
                     </td>
                     <td>

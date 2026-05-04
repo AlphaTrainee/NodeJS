@@ -18,11 +18,11 @@
             <label>Preis (€):</label><br>
             <input type="number" name="preis" step="0.01" value="<%= ticket ? ticket.preis : '' %>" required><br><br>
             
-            <label>Kategorie:</label><br>
-            <select name="kategorie" required>
+            <label>Category:</label><br>
+            <select name="category" required>
                 <option value="">-- Bitte wählen --</option>
                 <% categories.forEach(kat => { %>
-                    <option value="<%= kat.id %>" <%= ticket && ticket.kategorie == kat.id ? 'selected' : '' %>>
+                    <option value="<%= kat.id %>" <%= ticket && ticket.category == kat.id ? 'selected' : '' %>>
                         <%= kat.name %>
                     </option>
                 <% }) %>

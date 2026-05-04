@@ -29,21 +29,21 @@
                 </tr>
             </thead>
             <tbody>
-                <% kategorien.forEach(kategorie => { %>
+                <% categories.forEach(category => { %>
                     <tr>
-                        <td><%= kategorie.id %></td>
+                        <td><%= category.id %></td>
                         <td class="center-td">
-                            <% if (kategorie.visible) { %>
+                            <% if (category.visible) { %>
                                 <span class="visible icon">✔</span>
                             <% } else { %>
                                 <span class="hidden icon">✘</span>
                             <% } %>
                         </td>
-                        <td><%= kategorie.name %></td>
-                        <td><%= kategorie.description %></td>
+                        <td><%= category.name %></td>
+                        <td><%= category.description %></td>
                         <td>
-                            <a href="/admin/categories/edit/<%= kategorie.id %>" class="btn-edit">Bearbeiten</a>
-                            <form action="/admin/categories/delete/<%= kategorie.id %>" method="POST"
+                            <a href="/admin/categories/edit/<%= category.id %>" class="btn-edit">Bearbeiten</a>
+                            <form action="/admin/categories/delete/<%= category.id %>" method="POST"
                                 style="display:inline;" onsubmit="return confirm('Wirklich löschen?')">
                                 <button type="submit" class="btn-del">Löschen</button>
                             </form>

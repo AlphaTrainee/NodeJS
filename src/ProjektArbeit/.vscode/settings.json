@@ -1,0 +1,11 @@
+{
+    "saveAndRun": {
+        "commands": [
+            {
+                "match": ".*\\.md$",
+                "cmd": "node md_to_ejs.js ${file}",
+                "useStandardExecute": true
+            }
+        ]
+    }
+}

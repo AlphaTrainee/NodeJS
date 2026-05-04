@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-docs": "node convert-docs.js"
   },
   "keywords": [],
   "author": "Franziska Walter <job@f-walter.de> (https://alpha.franzi.hamburg/)",

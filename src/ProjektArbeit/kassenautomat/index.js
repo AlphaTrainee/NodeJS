@@ -63,13 +63,6 @@ app.use('/api/tickets', ticketRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/admin', adminRoutes);
 
-// um Fehler zu triggern
-app.get('/test/error', (req, res) => {
-    console.log(`Triggert einen Error 500`);
-    throw new Error("Das ist ein Test-Fehler!");
-    return;
-});
-
 app.use((req, res) => {
     res.status(404)
         .render('error', { error: `Diese Route ${ req.originalUrl } existiert nicht`, err: null });

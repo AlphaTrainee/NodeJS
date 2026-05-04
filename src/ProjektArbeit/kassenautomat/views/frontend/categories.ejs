@@ -28,7 +28,7 @@
     <h2>Alle Kategorien</h2>
         
         <div class="touch-grid">
-            <% kategorien.forEach(kat => { %>
+            <% categories.forEach(kat => { %>
                 <a href="/categories/<%= kat.id %>" class="touch-button">
                     <%= kat.name %>
                     <% if(kat.description) { %>

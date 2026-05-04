@@ -24,14 +24,14 @@ const Ticket = sequelize.define('Ticket', {
       }
     }
   },
-  kategorie: {
+  category: {
     type: DataTypes.INTEGER,
     allowNull: true,
     validate: {
-      isInt: { msg: "Die Kategorie-ID muss eine Ganzzahl sein." },
+      isInt: { msg: "Die Category-ID muss eine Ganzzahl sein." },
       min: {
         args: [1],
-        msg: "Ungültige Kategorie-ID."
+        msg: "Ungültige Category-ID."
       }
     }
   },

@@ -1,5 +1,5 @@
 import express from 'express';
-import Kategorie from '../models/Kategorie.js';
+import Category from '../models/Category.js';
 import Ticket from '../models/Ticket.js';
 import SoldTicket from '../models/SoldTicket.js';
 import Sale from '../models/Sale.js';
@@ -8,7 +8,7 @@ Sale.hasMany(SoldTicket, { foreignKey: 'saleId' });
 SoldTicket.belongsTo(Sale, { foreignKey: 'saleId' });
 
 SoldTicket.belongsTo(Ticket, { foreignKey: 'ticketId' });
-Ticket.belongsTo(Kategorie, { foreignKey: 'kategorie' });
+Ticket.belongsTo(Category, { foreignKey: 'category' });
 
 const router = express.Router();
 
@@ -35,21 +35,21 @@ router.get('/', (req, res) => {
     }
 });
 
-// Abrufen der Kategorien für den Touch-Screen
+// Abrufen der Categories für den Touch-Screen
 import { Sequelize } from 'sequelize'; // Wichtig für die Zähl-Funktion
 
 router.get('/categories', async (req, res) => {
     try {
-        // 1. Kategorien wie gehabt laden
-        const kategorien = await Kategorie.findAll({
+        // 1. Categories wie gehabt laden
+        const categories = await Category.findAll({
             where: { visible: true },
             include: [{
                 model: Ticket,
-                where: { visible: true }, // Nur Kategorien mit sichtbaren Tickets
-                required: true,           // Das erzwingt den INNER JOIN (keine leeren Kategorien)
+                where: { visible: true }, // Nur Categories mit sichtbaren Tickets
+                required: true,           // Das erzwingt den INNER JOIN (keine leeren Categories)
                 attributes: []            // Wir brauchen die Ticket-Daten hier nicht im Objekt
             }],
-            group: ['Kategorie.id'],       // Verhindert Duplikate, wenn eine Kategorie viele Tickets hat
+            group: ['Category.id'],       // Verhindert Duplikate, wenn eine Category viele Tickets hat
             distinct: true,
             order: [['name', 'ASC']]
         });
@@ -67,8 +67,8 @@ router.get('/categories', async (req, res) => {
                 where: { visible: true },
                 attributes: [], // Wir wollen keine Ticket-Felder im Ergebnis-Objekt
                 include: [{
-                    model: Kategorie,
-                    required: true, // INNER JOIN: Kategorie MUSS noch existieren
+                    model: Category,
+                    required: true, // INNER JOIN: Category MUSS noch existieren
                     where: { visible: true },
                     attributes: []
                 }]
@@ -80,9 +80,9 @@ router.get('/categories', async (req, res) => {
         });
 
         res.render('frontend/categories', {
-            kategorien,
+            categories,
             bestsellers, // Wir geben die Bestseller an das Template weiter
-            currentPage: 'kategorien'
+            currentPage: 'categories'
         });
     } catch (err) {
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
@@ -93,22 +93,22 @@ router.get('/categories', async (req, res) => {
     }
 });
 
-// Ticket-Auswahl basierend auf der Kategorie-ID
+// Ticket-Auswahl basierend auf der Category-ID
 router.get('/categories/:katId', async (req, res) => {
     if (!req.session.cart) req.session.cart = [];
 
     try {
-        const kategorie = await Kategorie.findOne({
+        const category = await Category.findOne({
             where: {
                 id: req.params.katId,
                 visible: true
             }
         });
-        const tickets = await Ticket.findAll({ where: { kategorie: req.params.katId, visible: true } });
+        const tickets = await Ticket.findAll({ where: { category: req.params.katId, visible: true } });
 
-        if (kategorie) {
+        if (category) {
             req.session.CategoryId = req.params.katId;
-            req.session.CategoryName = kategorie.name;
+            req.session.CategoryName = category.name;
         } else {
             delete req.session.CategoryId;
             delete req.session.CategoryName;
@@ -119,7 +119,7 @@ router.get('/categories/:katId', async (req, res) => {
 
             res.render('frontend/tickets', {
                 tickets,
-                kategorie,
+                category,
                 currentPage: 'tickets',
                 cartCount: req.session.cart.length
             });
@@ -453,6 +453,13 @@ router.get('/checkout', async (req, res) => {
 
 router.get('/timeout', (req, res) => {
     res.render('frontend/timeout');
+});
+
+// um Fehler zu triggern
+router.get('/test/error', (req, res) => {
+    console.log(`Triggert einen Error 500`);
+    throw new Error("Das ist ein Test-Fehler!");
+    return;
 });
 
 export default router;

@@ -2,24 +2,24 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title><%= kategorie ? 'Kategorie bearbeiten' : 'Neue Kategorie' %></title>
+    <title><%= category ? 'Kategorie bearbeiten' : 'Neue Kategorie' %></title>
     <link rel="stylesheet" href="/admin_style.css">
 </head>
 <body>
-    <h1><%= kategorie ? 'Kategorie bearbeiten (ID: ' + kategorie.id + ')' : 'Neue Kategorie anlegen' %></h1>
+    <h1><%= category ? 'Kategorie bearbeiten (ID: ' + category.id + ')' : 'Neue Kategorie anlegen' %></h1>
 
     <%- include('../partials/error-box') %>
 
     <div class="card">
-        <form action="/admin/categories/<%= kategorie ? 'edit/' + kategorie.id : 'add' %>" method="POST">
+        <form action="/admin/categories/<%= category ? 'edit/' + category.id : 'add' %>" method="POST">
             <label>Name:</label><br>
-            <input type="text" name="name" value="<%= kategorie ? kategorie.name : '' %>" required><br><br>
+            <input type="text" name="name" value="<%= category ? category.name : '' %>" required><br><br>
             
             <label>Beschreibung:</label><br>
-            <input type="text" name="description" value="<%= kategorie ? kategorie.description : '' %>"><br><br>
+            <input type="text" name="description" value="<%= category ? category.description : '' %>"><br><br>
 
             <label>
-                <input type="checkbox" name="visible" <%= (kategorie === null || kategorie.visible) ? 'checked' : '' %>>
+                <input type="checkbox" name="visible" <%= (category === null || category.visible) ? 'checked' : '' %>>
                 Im Frontend anzeigen
             </label><br><br>
 
