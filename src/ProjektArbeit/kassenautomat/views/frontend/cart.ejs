@@ -23,7 +23,9 @@
                         
                         <div class="item-controls">
                             <strong><%= (Number(item.preis) * Number(item.quantity)).toFixed(2) %> €</strong>
+                            <a href="/cart/add/<%= item.id %>" class="btn-add">+</a>
                             <a href="/cart/remove/<%= item.id %>" class="btn-remove">−</a>
+                            <a href="/cart/delete/<%= item.id %>" class="btn-delete">🗑</a>
                         </div>
                     </div>
                 <% }) %>

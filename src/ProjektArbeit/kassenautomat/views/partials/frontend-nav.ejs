@@ -1,22 +1,22 @@
 <nav class="top-nav">
     <!-- Kategorien sind immer klickbar -->
     <a href="/kategorien" class="nav-item <%= currentPage === 'kategorien' ? 'active' : '' %>">
-        1. Kategorien
+        Kategorien
     </a>
-
+<!-- <%= JSON.stringify(locals) %> -->
     <!-- Tickets nur klickbar, wenn man in einer Kategorie ist (oder schon Items hat) -->
-    <% if (currentPage === 'tickets' || cartCount > 0) { %>
-        <span class="nav-item <%= currentPage === 'tickets' ? 'active' : '' %>">2. Tickets</span>
+    <% if ( session && session.CategoryName && session.CategoryId ) { %>
+        <a href="/kategorien/<%= session.CategoryId %>" class="nav-item <%= currentPage === 'tickets' ? 'active' : '' %>">Tickets (<%= session.CategoryName %>)</a>
     <% } else { %>
-        <span class="nav-item disabled">2. Tickets</span>
+        <span class="nav-item disabled">Tickets</span>
     <% } %>
 
     <!-- Warenkorb nur klickbar, wenn er nicht leer ist -->
     <% if (cartCount > 0) { %>
         <a href="/cart" class="nav-item <%= currentPage === 'cart' ? 'active' : '' %>">
-            3. Warenkorb <span class="cart-badge"><%= cartCount %></span>
+            Warenkorb <span class="cart-badge"><%= cartCount %></span>
         </a>
     <% } else { %>
-        <span class="nav-item disabled">3. Warenkorb</span>
+        <span class="nav-item disabled">Warenkorb</span>
     <% } %>
 </nav>

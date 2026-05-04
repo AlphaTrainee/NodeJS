@@ -46,8 +46,9 @@ app.use('/', session({
 
 app.use((req, res, next) => {
     // res.locals macht Variablen in ALLEN ejs-Dateien verfügbar
+    res.locals.session = req.session;
     res.locals.cartCount = (req.session && req.session.cart) ? req.session.cart.length : 0;
-    res.locals.currentPage = ''; // Standardwert
+    res.locals.currentPage = req.path.split('/')[1] || 'home';
     next(); // WICHTIG: Damit die Anfrage zur nächsten Station weitergeht!
 });
 

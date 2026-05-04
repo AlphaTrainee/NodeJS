@@ -17,8 +17,15 @@ const getCartInfo = (req) => {
 };
 
 router.get('/', (req, res) => {
-    req.session.destroy();
-    res.render('frontend/index');
+    req.session.destroy((err) => {
+        if (err) {
+            // Falls beim Löschen was schiefgeht
+            return res.status(500).send("Fehler beim Logout");
+        }
+        // Erst HIER ist die Session sicher weg.
+        // Die Middleware erzeugt beim nächsten Klick automatisch eine neue.
+        res.render('frontend/index'); 
+    });
 });
 
 // Abrufen der Kategorien für den Touch-Screen
@@ -52,20 +59,32 @@ router.get('/kategorien', async (req, res) => {
 });
 
 // Ticket-Auswahl basierend auf der Kategorie-ID
-router.get('/tickets/:katId', async (req, res) => {
-    if (!req.session.cart) return res.redirect('/'); // Notstopp, falls Session weg
+router.get('/kategorien/:katId', async (req, res) => {
+    if (!req.session.cart) req.session.cart = [];
 
     const kategorie = await Kategorie.findByPk(req.params.katId);
     const tickets = await Ticket.findAll({ where: { kategorie: req.params.katId, visible: true } });
 
-    req.session.lastCategoryId = req.params.katId;
-    
-    res.render('frontend/tickets', {
-        tickets,
-        kategorie,
-        currentPage: 'tickets',
-        cartCount: req.session.cart.length
+    if (kategorie) {
+        req.session.CategoryId = req.params.katId;
+        req.session.CategoryName = kategorie.name;
+    } else {
+        delete req.session.CategoryId;
+        delete req.session.CategoryName;
+    }
+
+    req.session.save((err) => {
+        if (err) console.error("Session Save Error:", err);
+        
+        res.render('frontend/tickets', {
+            tickets,
+            kategorie,
+            currentPage: 'tickets',
+            cartCount: req.session.cart.length
+        });
     });
+
+
 });
 
 // Ticket zum Warenkorb hinzufügen
@@ -142,6 +161,27 @@ router.get('/cart/remove/:id', (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send("Fehler beim Entfernen");
+    }
+});
+
+router.get('/cart/delete/:id', async (req, res) => {
+    try {
+        const itemId = req.params.id;
+
+        if (!req.session || !req.session.cart) {
+            return res.redirect('/cart');
+        }
+
+        // Artikel komplett entfernen
+        req.session.cart = req.session.cart.filter(item => item.id != itemId);
+
+        req.session.save((err) => {
+            if (err) throw err;
+            res.redirect('/cart');
+        });
+    } catch (error) {
+        console.error("Delete-Route Fehler:", error);
+        res.status(500).send("Fehler beim Löschen des Artikels.");
     }
 });
 

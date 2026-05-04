@@ -28,7 +28,7 @@
         
         <div class="touch-grid">
             <% kategorien.forEach(kat => { %>
-                <a href="/tickets/<%= kat.id %>" class="touch-button">
+                <a href="/kategorien/<%= kat.id %>" class="touch-button">
                     <%= kat.name %>
                     <% if(kat.description) { %>
                         <span class="description"><%= kat.description %></span>

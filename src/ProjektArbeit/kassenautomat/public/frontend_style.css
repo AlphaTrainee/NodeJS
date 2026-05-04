@@ -329,13 +329,32 @@ body, html {
     gap: 15px;
 }
 
-.btn-remove {
-    color: #ff4444;
+.btn-remove, .btn-add, .btn-delete {
+    display: inline-block;  /* Wichtig, damit width/height greifen */
+    width: 40px;           /* Feste Breite für alle */
+    height: 40px;          /* Feste Höhe für quadratische Buttons */
+    line-height: 28px;     /* Zentriert den Text vertikal (abhängig von Padding/Border) */
+    text-align: center;    /* Zentriert den Text horizontal */
     text-decoration: none;
     font-weight: bold;
-    padding: 5px 10px;
-    border: 1px solid #ff4444;
     border-radius: 5px;
+    box-sizing: border-box; /* Sorgt dafür, dass Border das Maß nicht sprengt */
+    padding: 5px;          /* Kleines Padding für die Optik */
+}
+
+.btn-remove {
+    color: #ff4444;
+    border: 1px solid #ff4444;
+}
+
+.btn-add {
+    color: #44ff44;
+    border: 1px solid #44ff44;
+}
+
+.btn-delete {
+    color: white;
+    border: 1px solid white;
 }
 
 .touch-grid {
