@@ -9,7 +9,7 @@ Bei dem vorliegenden Projekt handelt es sich um eine serverseitige Webanwendung 
 
 ## Funktionen Frontend
 
-### [Link: Frontend{external}](http://localhost:3000)
+### [Link: Frontend{external}](/)
 
 - die Oberfläche zeigt nur Willkommen .. berühren sie den Bildschirm um zu starten
     - dies signalisiert, es ist kein Vorgang aktiv, es wird ein neuer Vorgang gestartet
@@ -23,7 +23,7 @@ falls nicht, wird nach einer Wartezeit der Vorgang beendet und der Startbildschi
 
 ## Funktionen Backend
 
-### [Link: Backend{external}](http://localhost:3000/admin)
+### [Link: Backend{external}](/admin)
 
 Login: ```developer:service```
 
@@ -36,4 +36,86 @@ Login: ```developer:service```
 ## API Endpunkte
 Dies ist als Beispiel gedacht, wie von einem externen Zutrittssystem die Tickets abgerufen  werden können.
 
-- [REST API Tickets{external}](http://localhost:3000/api/tickets)
+- [REST API Tickets{external}](/api/tickets)
+
+## Apache Reverse Proxy - VHOST
+
+Dies läuft mit meiner lokalen Apache Installation.   
+Es sind lokale Zertifikate erzeugt und funktionsfähig, das soll aber hier jetzt nicht das Thema sein.   
+
+```
+<VirtualHost *:80>
+	ServerName projektarbeit.local
+	ServerAlias www.projektarbeit.local
+
+	<Directory "C:/WebSites/ERROR">
+		Options Indexes FollowSymLinks
+		AllowOverride None
+		Require all granted
+	</Directory>
+
+	ProxyPreserveHost On
+	ProxyRequests Off
+	ProxyVia Off
+
+	<Proxy *>
+		Require all granted
+	</Proxy>
+
+	ProxyTimeout 10
+
+	ErrorDocument 502 /offline/502.php
+	ErrorDocument 503 /offline/503.php
+	Alias /offline C:/WebSites/ERROR
+	Alias /offline_error.jpg C:/WebSites/ERROR/offline_error.jpg
+	ProxyPass /offline/ !
+	ProxyPass /offline !
+	ProxyPass /offline_error.jpg !
+
+	# Setze X-Forwarded-Proto auf angefordertes Schema für das Backend
+	RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+
+	ProxyPass / http://localhost:3000/
+	ProxyPassReverse / http://localhost:3000/
+</VirtualHost>
+
+<VirtualHost *:443>
+	ServerName projektarbeit.local
+	ServerAlias www.projektarbeit.local
+
+	SSLEngine On
+
+	<Directory "C:/WebSites/ERROR">
+		Options Indexes FollowSymLinks
+		AllowOverride None
+		Require all granted
+	</Directory>
+
+	ProxyPreserveHost On
+	ProxyRequests Off
+	ProxyVia Off
+
+	<Proxy *>
+		Require all granted
+	</Proxy>
+
+	ProxyTimeout 10
+
+	ErrorDocument 502 /offline/502.php
+	ErrorDocument 503 /offline/503.php
+	Alias /offline C:/WebSites/ERROR
+	Alias /offline_error.jpg C:/WebSites/ERROR/offline_error.jpg
+	ProxyPass /offline/ !
+	ProxyPass /offline !
+	ProxyPass /offline_error.jpg !
+
+	# Setze X-Forwarded-Proto auf angefordertes Schema für das Backend
+	RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+	
+	ProxyPass / http://localhost:3000/
+	ProxyPassReverse / http://localhost:3000/
+
+	SSLCertificateFile "conf/ssl.crt/localhost.crt"
+	SSLCertificateKeyFile "conf/ssl.key/localhost.key"
+</VirtualHost>
+```

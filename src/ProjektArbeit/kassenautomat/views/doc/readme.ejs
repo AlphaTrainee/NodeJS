@@ -4,7 +4,7 @@ Der Kunde kommt an einen (Touch) Monitor um sich Tickets für Veranstaltungen zu
 <h2>Technik</h2>
 <p>Bei dem vorliegenden Projekt handelt es sich um eine serverseitige Webanwendung auf Basis von Node.js und dem Express-Framework. Die Architektur folgt dem REST-Prinzip und nutzt Sequelize als Object-Relational Mapper (ORM). Dies ermöglicht eine datenbankagnostische Entwicklung, wobei das System flexibel sowohl mit SQLite (für die lokale Entwicklung) als auch mit MySQL (für den Produktivbetrieb) interagieren kann. Zur Absicherung der Benutzersitzungen wird ein Session-Management integriert, während CORS eine sichere Kommunikation mit Frontend-Clients gewährleistet.</p>
 <h2>Funktionen Frontend</h2>
-<h3><a href="http://localhost:3000" target="_blank" rel="noopener noreferrer">Link: Frontend</a></h3>
+<h3><a href="/" target="_blank" rel="noopener noreferrer">Link: Frontend</a></h3>
 <ul>
 <li>die Oberfläche zeigt nur Willkommen .. berühren sie den Bildschirm um zu starten
 <ul>
@@ -23,7 +23,7 @@ Der Kunde kommt an einen (Touch) Monitor um sich Tickets für Veranstaltungen zu
 falls nicht, wird nach einer Wartezeit der Vorgang beendet und der Startbildschirm angezeigt</li>
 </ul>
 <h2>Funktionen Backend</h2>
-<h3><a href="http://localhost:3000/admin" target="_blank" rel="noopener noreferrer">Link: Backend</a></h3>
+<h3><a href="/admin" target="_blank" rel="noopener noreferrer">Link: Backend</a></h3>
 <p>Login: <code>developer:service</code></p>
 <ul>
 <li>der Admin User muss sich einloggen</li>
@@ -38,5 +38,83 @@ falls nicht, wird nach einer Wartezeit der Vorgang beendet und der Startbildschi
 <h2>API Endpunkte</h2>
 <p>Dies ist als Beispiel gedacht, wie von einem externen Zutrittssystem die Tickets abgerufen  werden können.</p>
 <ul>
-<li><a href="http://localhost:3000/api/tickets" target="_blank" rel="noopener noreferrer">REST API Tickets</a></li>
+<li><a href="/api/tickets" target="_blank" rel="noopener noreferrer">REST API Tickets</a></li>
 </ul>
+<h2>Apache Reverse Proxy - VHOST</h2>
+<p>Dies läuft mit meiner lokalen Apache Installation.<br>
+Es sind lokale Zertifikate erzeugt und funktionsfähig, das soll aber hier jetzt nicht das Thema sein.</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+	ServerName projektarbeit.local
+	ServerAlias www.projektarbeit.local
+
+	&lt;Directory &quot;C:/WebSites/ERROR&quot;&gt;
+		Options Indexes FollowSymLinks
+		AllowOverride None
+		Require all granted
+	&lt;/Directory&gt;
+
+	ProxyPreserveHost On
+	ProxyRequests Off
+	ProxyVia Off
+
+	&lt;Proxy *&gt;
+		Require all granted
+	&lt;/Proxy&gt;
+
+	ProxyTimeout 10
+
+	ErrorDocument 502 /offline/502.php
+	ErrorDocument 503 /offline/503.php
+	Alias /offline C:/WebSites/ERROR
+	Alias /offline_error.jpg C:/WebSites/ERROR/offline_error.jpg
+	ProxyPass /offline/ !
+	ProxyPass /offline !
+	ProxyPass /offline_error.jpg !
+
+	# Setze X-Forwarded-Proto auf angefordertes Schema für das Backend
+	RequestHeader set &quot;X-Forwarded-Proto&quot; expr=%{REQUEST_SCHEME}
+
+	ProxyPass / http://localhost:3000/
+	ProxyPassReverse / http://localhost:3000/
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:443&gt;
+	ServerName projektarbeit.local
+	ServerAlias www.projektarbeit.local
+
+	SSLEngine On
+
+	&lt;Directory &quot;C:/WebSites/ERROR&quot;&gt;
+		Options Indexes FollowSymLinks
+		AllowOverride None
+		Require all granted
+	&lt;/Directory&gt;
+
+	ProxyPreserveHost On
+	ProxyRequests Off
+	ProxyVia Off
+
+	&lt;Proxy *&gt;
+		Require all granted
+	&lt;/Proxy&gt;
+
+	ProxyTimeout 10
+
+	ErrorDocument 502 /offline/502.php
+	ErrorDocument 503 /offline/503.php
+	Alias /offline C:/WebSites/ERROR
+	Alias /offline_error.jpg C:/WebSites/ERROR/offline_error.jpg
+	ProxyPass /offline/ !
+	ProxyPass /offline !
+	ProxyPass /offline_error.jpg !
+
+	# Setze X-Forwarded-Proto auf angefordertes Schema für das Backend
+	RequestHeader set &quot;X-Forwarded-Proto&quot; expr=%{REQUEST_SCHEME}
+	
+	ProxyPass / http://localhost:3000/
+	ProxyPassReverse / http://localhost:3000/
+
+	SSLCertificateFile &quot;conf/ssl.crt/localhost.crt&quot;
+	SSLCertificateKeyFile &quot;conf/ssl.key/localhost.key&quot;
+&lt;/VirtualHost&gt;
+</code></pre>
