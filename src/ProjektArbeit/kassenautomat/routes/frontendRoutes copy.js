@@ -394,12 +394,17 @@ router.get('/cart/clear', (req, res) => {
 });
 
 router.get('/checkout', async (req, res) => {
+    let t;
+
     try {
         const cart = req.session.cart || [];
 
         if (cart.length === 0) {
+            await t.rollback();
             return res.redirect('/categories');
         }
+
+        t = await sequelize.transaction();
 
         const total = cart.reduce((sum, item) => sum + item.preis, 0);
 
@@ -408,7 +413,7 @@ router.get('/checkout', async (req, res) => {
             totalAmount: total,
             paymentMethod: 'Bar/Kasse',
             status: 'completed'
-        });
+        }, { transaction: t });
 
         // 2. SoldTickets erstellen - Jetzt mit ticketId!
         const soldTicketsPromises = cart.map(item => {
@@ -417,10 +422,13 @@ router.get('/checkout', async (req, res) => {
                 ticketId: item.id,   // WICHTIG: Die ID aus dem Warenkorb-Item
                 ticketName: item.name,
                 isValid: true
-            });
+            }, { transaction: t });
         });
 
         const createdTickets = await Promise.all(soldTicketsPromises);
+
+        // 3. Alles bestätigen
+        await t.commit();
 
         // Warenkorb leeren
         req.session.cart = [];
@@ -433,6 +441,8 @@ router.get('/checkout', async (req, res) => {
         });
 
     } catch (err) {
+        if (t) await t.rollback();
+
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
             return res.status(400).render('frontend/success', {
                 currentPage: 'success',

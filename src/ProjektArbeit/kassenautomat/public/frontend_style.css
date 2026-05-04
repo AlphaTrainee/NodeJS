@@ -5,14 +5,16 @@
     --success: #28a745;
 }
 
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     height: 100%;
     font-family: sans-serif;
     background-color: var(--dark);
     color: white;
-    overflow: hidden; /* Verhindert Scrollen am Kiosk */
+    overflow: hidden;
+    /* Verhindert Scrollen am Kiosk */
 }
 
 /* Obere Navigation */
@@ -38,7 +40,7 @@ body, html {
 /* Container für den Content */
 .content-container {
     padding: 20px;
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -63,7 +65,7 @@ body, html {
     border-radius: 15px;
     text-align: center;
     text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,23 +111,6 @@ body, html {
     font-weight: 900;
 }
 
-/* Sekundärer Button (z.B. Zurück) */
-.btn-secondary {
-    display: block;
-    text-align: center;
-    background: #6c757d;
-    color: white;
-    text-decoration: none;
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    margin-top: 20px;
-}
-
-.btn-secondary:active {
-    background: #5a6268;
-}
-
 /* Navigation klickbar machen */
 .nav-item {
     text-decoration: none;
@@ -133,7 +118,8 @@ body, html {
 }
 
 .nav-item:not(.active) {
-    color: #bbb; /* Etwas heller als vorher, damit man sieht, dass man zurück kann */
+    color: #bbb;
+    /* Etwas heller als vorher, damit man sieht, dass man zurück kann */
 }
 
 /* Warenkorb-Elemente */
@@ -207,19 +193,22 @@ body, html {
 }
 
 .nav-item.disabled {
-    color: #444; /* Dunkelgrau/Deaktiviert */
-    pointer-events: none; /* Nicht anklickbar */
+    color: #444;
+    /* Dunkelgrau/Deaktiviert */
+    pointer-events: none;
+    /* Nicht anklickbar */
     opacity: 0.5;
 }
 
 /* Der Abbrechen-Button */
 .btn-abort {
     display: inline-block;
-    margin-top: 50px;
     padding: 12px 25px;
     background-color: transparent;
-    color: #888; /* Dezentes Grau */
-    border: 2px solid #444; /* Dunkler Rahmen */
+    color: #888;
+    /* Dezentes Grau */
+    border: 2px solid #444;
+    /* Dunkler Rahmen */
     border-radius: 8px;
     text-decoration: none;
     font-size: 0.9rem;
@@ -230,10 +219,34 @@ body, html {
 }
 
 /* Feedback beim Berühren (Touch) */
-.btn-abort:active {
-    background-color: #ff4444; /* Wird beim Drücken rot */
+.btn-abort:hover {
+    background-color: #ff4444;
+    /* Wird beim Drücken rot */
     border-color: #ff4444;
     color: white;
+}
+
+/* Sekundärer Button (z.B. Zurück) */
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: transparent;
+    background: #6c757d;
+    color: white;
+    /* Dezentes Grau */
+    border: 2px solid #444;
+    /* Dunkler Rahmen */
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
 }
 
 .success-card {
@@ -242,7 +255,7 @@ body, html {
     padding: 40px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     width: 100%;
     max-width: 500px;
 }
@@ -283,27 +296,48 @@ body, html {
 }
 
 .bestseller-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    /* Erlaubt Umbruch, falls der Platz echt nicht reicht */
     gap: 15px;
+    /* Abstand zwischen den Items */
     margin-bottom: 20px;
 }
 
 .bestseller-item {
-    background: linear-gradient(135deg, #444, #222);
-    border: 2px solid var(--primary);
+    flex: 1 1 calc(25% - 15px);
+    /* Basisgröße ist 25% (also 4 Stück), minus Gap */
+    min-width: 150px;
+    /* Verhindert, dass sie auf dem Handy zu winzig werden */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 15px;
-    border-radius: 12px;
-    text-align: center;
+    background: #2a2a2a;
+    /* Beispiel Hintergrundfarbe */
+    border: 1px solid var(--primary);
+    border-radius: 8px;
     text-decoration: none;
     color: white;
+    transition: transform 0.2s;
+}
+
+.bestseller-item:hover {
+    transform: scale(1.03);
+    /* Kleiner Effekt beim Drüberfahren */
+    background: #333;
 }
 
 .bestseller-item .star {
-    display: block;
     color: gold;
     font-size: 1.2rem;
     margin-bottom: 5px;
+}
+
+.bestseller-item .name {
+    text-align: center;
+    font-weight: bold;
 }
 
 .cart-list {
@@ -329,17 +363,26 @@ body, html {
     gap: 15px;
 }
 
-.btn-remove, .btn-add, .btn-delete {
-    display: inline-block;  /* Wichtig, damit width/height greifen */
-    width: 40px;           /* Feste Breite für alle */
-    height: 40px;          /* Feste Höhe für quadratische Buttons */
-    line-height: 28px;     /* Zentriert den Text vertikal (abhängig von Padding/Border) */
-    text-align: center;    /* Zentriert den Text horizontal */
+.btn-remove,
+.btn-add,
+.btn-delete {
+    display: inline-block;
+    /* Wichtig, damit width/height greifen */
+    width: 40px;
+    /* Feste Breite für alle */
+    height: 40px;
+    /* Feste Höhe für quadratische Buttons */
+    line-height: 28px;
+    /* Zentriert den Text vertikal (abhängig von Padding/Border) */
+    text-align: center;
+    /* Zentriert den Text horizontal */
     text-decoration: none;
     font-weight: bold;
     border-radius: 5px;
-    box-sizing: border-box; /* Sorgt dafür, dass Border das Maß nicht sprengt */
-    padding: 5px;          /* Kleines Padding für die Optik */
+    box-sizing: border-box;
+    /* Sorgt dafür, dass Border das Maß nicht sprengt */
+    padding: 5px;
+    /* Kleines Padding für die Optik */
 }
 
 .btn-remove {
@@ -362,7 +405,22 @@ body, html {
 }
 
 .action-footer {
-    text-align: center;
+display: flex;
+    flex-direction: row;      /* Erzwingt die Reihe */
+    justify-content: center;  /* Zentriert die Buttons nebeneinander */
+    align-items: center;
+    gap: 20px;               /* Schafft den Abstand zwischen den Buttons */
+    margin-top: auto;         /* Schiebt alles nach unten */
     width: 100%;
-    margin-top: 20px;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+/* Falls die Buttons gleich groß sein sollen */
+.action-footer a {
+    flex: 1;                       /* Beide Buttons nehmen den gleichen Platz ein */
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    border-radius: 8px;
 }

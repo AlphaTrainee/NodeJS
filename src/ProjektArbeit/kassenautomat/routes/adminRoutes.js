@@ -184,28 +184,28 @@ router.post('/tickets/delete/:id', auth, async (req, res) => {
 });
 
 // Alle Kategorien anzeigen
-router.get('/kategorien', auth, async (req, res) => {
+router.get('/categories', auth, async (req, res) => {
     try {
         const kategorien = await Kategorie.findAll();
-        res.render('admin/kategorien', { kategorien, error: null });
+        res.render('admin/categories', { kategorien, error: null });
     } catch (err) {
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('admin/kategorien', { kategorien: null, error: "DB Fehler", err });
+            return res.status(400).render('admin/categories', { kategorien: null, error: "DB Fehler", err });
         }
-        res.status(500).render('admin/kategorien', { kategorien: null, error: "Server-Fehler", err });
+        res.status(500).render('admin/categories', { kategorien: null, error: "Server-Fehler", err });
     }
 });
 
-router.get('/kategorien/add', auth, async (req, res) => {
-    res.render('admin/kategorie-form', { kategorie: null, error: null });
+router.get('/categories/add', auth, async (req, res) => {
+    res.render('admin/category-form', { kategorie: null, error: null });
 });
 
 // Neue Kategorie speichern
-router.post('/kategorien/add', auth, async (req, res) => {
+router.post('/categories/add', auth, async (req, res) => {
     try {
         req.body.visible = req.body.visible === 'on';
         await Kategorie.create(req.body);
-        res.redirect('/admin/kategorien');
+        res.redirect('/admin/categories');
     } catch (err) {
         const dataFromForm = {
             ...req.body,
@@ -213,32 +213,32 @@ router.post('/kategorien/add', auth, async (req, res) => {
         };
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('admin/kategorie-form', { kategorie: dataFromForm, error: "Ungültige Eingaben", err });
+            return res.status(400).render('admin/category-form', { kategorie: dataFromForm, error: "Ungültige Eingaben", err });
         }
 
-        res.status(500).render('admin/kategorie-form', { kategorie: null, error: "Fehler beim Erstellen.", err });
+        res.status(500).render('admin/category-form', { kategorie: null, error: "Fehler beim Erstellen.", err });
     }
 });
 
-router.get('/kategorien/edit/:id', auth, async (req, res) => {
+router.get('/categories/edit/:id', auth, async (req, res) => {
     try {
         const kategorie = await Kategorie.findByPk(req.params.id);
-        if (!kategorie) return res.render('admin/kategorie-form', { kategorie, error: "Kategorie nicht gefunden" });
-        res.render('admin/kategorie-form', { kategorie, error: null });
+        if (!kategorie) return res.render('admin/category-form', { kategorie, error: "Kategorie nicht gefunden" });
+        res.render('admin/category-form', { kategorie, error: null });
     } catch (err) {
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('admin/kategorie-form', { kategorie: null, error: "Ungültige Eingaben", err });
+            return res.status(400).render('admin/category-form', { kategorie: null, error: "Ungültige Eingaben", err });
         }
 
-        res.status(500).render('admin/kategorie-form', { kategorie: null, error: "Fehler beim Laden", err });
+        res.status(500).render('admin/category-form', { kategorie: null, error: "Fehler beim Laden", err });
     }
 });
 
-router.post('/kategorien/edit/:id', auth, async (req, res) => {
+router.post('/categories/edit/:id', auth, async (req, res) => {
     try {
         req.body.visible = req.body.visible === 'on';
         await Kategorie.update(req.body, { where: { id: req.params.id } });
-        res.redirect('/admin/kategorien');
+        res.redirect('/admin/categories');
     } catch (err) {
         const dataFromForm = {
             ...req.body,
@@ -246,10 +246,10 @@ router.post('/kategorien/edit/:id', auth, async (req, res) => {
         };
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('admin/kategorie-form', { kategorie: dataFromForm, error: "Ungültige Eingaben", err });
+            return res.status(400).render('admin/category-form', { kategorie: dataFromForm, error: "Ungültige Eingaben", err });
         }
 
-        res.status(500).render('admin/kategorie-form', { kategorie: dataFromForm, error: "Server-Fehler", err });
+        res.status(500).render('admin/category-form', { kategorie: dataFromForm, error: "Server-Fehler", err });
     }
 });
 
@@ -261,33 +261,33 @@ const handleDeleteKategorie = async (req, res) => {
         if (ticketCount > 0) {
             // Falls ja: Nicht löschen und Fehler zurückgeben (oder zur Liste zurück)
             const kategorien = await Kategorie.findAll();
-            res.render('admin/kategorien', { kategorien, error: "Kategorie kann nicht gelöscht werden, es sind noch Tickets zugeordnet." });
+            res.render('admin/categories', { kategorien, error: "Kategorie kann nicht gelöscht werden, es sind noch Tickets zugeordnet." });
             return;
         }
 
         const kat = await Kategorie.findByPk(req.params.id);
         if (!kat) {
             const kategorien = await Kategorie.findAll();
-            return res.status(404).render('admin/kategorien', { kategorien, error: "Kategorie nicht gefunden" });
+            return res.status(404).render('admin/categories', { kategorien, error: "Kategorie nicht gefunden" });
         }
 
         // Falls nein: Löschen
         await Kategorie.destroy({ where: { id: req.params.id } });
-        res.redirect('/admin/kategorien');
+        res.redirect('/admin/categories');
     } catch (err) {
         const kategorien = await Kategorie.findAll();
 
         if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('admin/kategorien', { kategorien, error: "Ungültige Eingaben", err });
+            return res.status(400).render('admin/categories', { kategorien, error: "Ungültige Eingaben", err });
         }
 
-        res.status(500).render('admin/kategorien', { kategorien, error: "Server-Fehler", err });
+        res.status(500).render('admin/categories', { kategorien, error: "Server-Fehler", err });
     }
 };
 
 // Kategorie löschen
-router.get('/kategorien/delete/:id', auth, handleDeleteKategorie);
-router.post('/kategorien/delete/:id', auth, handleDeleteKategorie);
+router.get('/categories/delete/:id', auth, handleDeleteKategorie);
+router.post('/categories/delete/:id', auth, handleDeleteKategorie);
 
 // Alle Verkäufe anzeigen
 router.get('/sales', async (req, res) => {
@@ -302,12 +302,19 @@ router.get('/sales', async (req, res) => {
 
         res.render('admin/sales', { 
             sales, 
-            grandTotal,
-            layout: 'admin/layout' // Falls du ein Admin-Layout nutzt
+            grandTotal
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).send("Fehler beim Laden der Verkaufsdaten");
+        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+            return res.status(400).render('admin/sales', { error: "Ungültige Eingaben", err });
+        }
+
+        res.status(500).render('admin/sales', { 
+            sales: null, 
+            grandTotal: null,
+            error: "Server-Fehler", 
+            err 
+        });
     }
 });
 

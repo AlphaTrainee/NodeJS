@@ -14,6 +14,11 @@ const Sale = sequelize.define('Sale', {
         type: DataTypes.STRING,
         defaultValue: 'completed'
     }
+}, {
+  // HIER den Namen festlegen:
+  tableName: 'ka_sales',
+  timestamps: true,
+  freezeTableName: true // Das sorgt dafür, dass Sequelize nicht versucht, ein "s" dranzuhängen
 });
 
 export default Sale;

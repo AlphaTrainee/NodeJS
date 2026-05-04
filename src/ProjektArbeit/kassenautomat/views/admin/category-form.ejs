@@ -11,7 +11,7 @@
     <%- include('../partials/error-box') %>
 
     <div class="card">
-        <form action="/admin/kategorien/<%= kategorie ? 'edit/' + kategorie.id : 'add' %>" method="POST">
+        <form action="/admin/categories/<%= kategorie ? 'edit/' + kategorie.id : 'add' %>" method="POST">
             <label>Name:</label><br>
             <input type="text" name="name" value="<%= kategorie ? kategorie.name : '' %>" required><br><br>
             
@@ -25,7 +25,7 @@
 
             <div class="btn-submit">
                 <button type="submit" class="btn-add">Speichern</button>
-                <a href="/admin/kategorien" class="btn-cancel">Abbrechen</a>
+                <a href="/admin/categories" class="btn-cancel">Abbrechen</a>
             </div>
         </form>
     </div>

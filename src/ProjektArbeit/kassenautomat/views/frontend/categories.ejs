@@ -8,12 +8,13 @@
 <body>
     <!-- Top Navigation -->
     <%- include('../partials/frontend-nav') %>
+    <%- include('../partials/error-box') %>
 
     <div class="content-container">
     <% if (bestsellers && bestsellers.length > 0) { %>
         <h2 style="color: var(--primary);">Oft gekauft</h2>
         <div class="bestseller-grid">
-            <% bestsellers.forEach(item => { %>
+            <% bestsellers.slice(0, 8).forEach(item => { %>
                 <!-- Hier bauen wir einen Button, der direkt in den Warenkorb führt -->
                 <a href="/cart/add-by-name?name=<%= encodeURIComponent(item.ticketName) %>" class="bestseller-item">
                     <span class="star">★</span>
@@ -28,7 +29,7 @@
         
         <div class="touch-grid">
             <% kategorien.forEach(kat => { %>
-                <a href="/kategorien/<%= kat.id %>" class="touch-button">
+                <a href="/categories/<%= kat.id %>" class="touch-button">
                     <%= kat.name %>
                     <% if(kat.description) { %>
                         <span class="description"><%= kat.description %></span>
@@ -36,6 +37,8 @@
                 </a>
             <% }) %>
         </div>
+        <%- include('../partials/frontend-footer') %>
     </div>
+    <%- include('../partials/inactivity') %>
 </body>
 </html>

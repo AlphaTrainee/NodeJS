@@ -9,9 +9,10 @@
 <body>
     <!-- Top Navigation -->
     <%- include('../partials/frontend-nav') %>
+    <%- include('../partials/error-box') %>
 
     <div class="content-container">
-        <h2>Welches Ticket benötigen Sie?</h2>
+        <h2>Bitte Ticket Auswählen</h2>
         
         <div class="touch-grid">
             <% if (tickets.length > 0) { %>
@@ -27,10 +28,8 @@
             <% } %>
         </div>
 
-        <!-- Großer Zurück-Button am unteren Rand -->
-        <div style="margin-top: auto; width: 100%; max-width: 800px;">
-            <a href="/kategorien" class="btn-secondary">← Zurück zur Auswahl</a>
-        </div>
+       <%- include('../partials/frontend-footer') %>
     </div>
+    <%- include('../partials/inactivity') %>
 </body>
 </html>

@@ -8,6 +8,7 @@
 </head>
 <body>
     <%- include('../partials/frontend-nav') %>
+    <%- include('../partials/error-box') %>
 
     <div class="content-container">
         <h2>Ihre Auswahl</h2>
@@ -39,19 +40,18 @@
                     <a href="/checkout" class="touch-button pay-btn">
                         JETZT BEZAHLEN
                     </a>
-                    <a href="/kategorien" class="touch-button alt-btn">
+                    <a href="/categories" class="touch-button alt-btn">
                         WEITERE TICKETS
                     </a>
                 </div>
             <% } else { %>
                 <p>Ihr Warenkorb ist leer.</p>
-                <a href="/kategorien" class="btn-secondary">Zurück zur Auswahl</a>
+                <a href="/categories" class="btn-secondary">Zurück zur Auswahl</a>
             <% } %>
         </div>
 
-        <div class="action-footer">
-            <a href="/cart/clear" class="btn-abort">Vorgang abbrechen</a>
-        </div>
+        <%- include('../partials/frontend-footer') %>
     </div>
+    <%- include('../partials/inactivity') %>
 </body>
 </html>
