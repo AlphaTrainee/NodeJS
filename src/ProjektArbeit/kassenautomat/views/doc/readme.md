@@ -7,6 +7,28 @@ Der Kunde kommt an einen (Touch) Monitor um sich Tickets für Veranstaltungen zu
 
 Bei dem vorliegenden Projekt handelt es sich um eine serverseitige Webanwendung auf Basis von Node.js und dem Express-Framework. Die Architektur folgt dem REST-Prinzip und nutzt Sequelize als Object-Relational Mapper (ORM). Dies ermöglicht eine datenbankagnostische Entwicklung, wobei das System flexibel sowohl mit SQLite (für die lokale Entwicklung) als auch mit MySQL (für den Produktivbetrieb) interagieren kann. Zur Absicherung der Benutzersitzungen wird ein Session-Management integriert, während CORS eine sichere Kommunikation mit Frontend-Clients gewährleistet.
 
+## Voraussetzungen / Installation
+
+Es wird mit vsCode und der Extension wk-j.save-and-run gearbeitet.
+Für (DIESE) Dokumentation wird automatisch aus einem MarkDown Dokument eine *.html (in diesem Fall *.ejs Datei erzeugt)   
+
+**die Installation ``npm i`` im Root Ordner ausführen**   
+Das Projekt (das Arbeitsverzeichnis) selber befindet sich im Unterordner ``Kassenautomat``.   
+Dies ist notwendig, um das Ausführen des der automatischen Konvertierung *.md -> -.ejs zu ermöglichen
+
+- alle Voraussetzungen mit ``npm i`` installieren
+- die ``.env.example`` nach ``.env`` umbenennen und für die eigene Installation anpassen
+    
+#### Seed - Datenbank erzeugen / Beispieldaten einspielen
+
+- wenn in der ``.env`` der Wert ``DB_SEED_FORCE=true`` gesetzt ist, wird die DB komplett zurückgesetzt
+- ist die Einstellung ``DB_SEED_FORCE=false`` werden nur fehlende Einträge erstellt, aber die bestehenden Daten bleiben erhalten
+
+Der Seeder wird nicht im Programmablauf aufgerufen!
+Wenn Notwendig, mit ``node seed.js`` aufrufen
+
+**Projekt im Arbeitsverzeichnis ``kassenautomat`` starten: ``node index.js``**  
+
 ## Funktionen Frontend
 
 ### [Link: Frontend{external}](/)

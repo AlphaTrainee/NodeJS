@@ -1,5 +1,6 @@
 :root {
     --primary: #007bff;
+    --line: rgba(248, 249, 250, 0.8);
     --dark: #212529;
     --light: #f8f9fa;
     --success: #28a745;
@@ -23,7 +24,7 @@ html {
     justify-content: space-around;
     background: #111;
     padding: 20px;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--line);
 }
 
 .nav-item {
@@ -34,13 +35,13 @@ html {
 }
 
 .nav-item.active {
-    color: var(--primary);
+    color: var(--light);
 }
 
 /* Container für den Content */
 .content-container {
     padding: 20px;
-    min-height: calc(100vh - 100px);
+    min-height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,10 +50,11 @@ html {
 /* Button Grid: 2 Spalten */
 .touch-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
+    margin-top: 10px;
 }
 
 /* Große Touch Buttons */
@@ -77,6 +79,11 @@ html {
     background: #0056b3;
 }
 
+.back-button {
+    margin-top: 30px;
+    background-color: var(--primary);
+}
+
 .description {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -91,6 +98,16 @@ html {
     align-items: center;
     height: 100%;
     width: 100%;
+}
+
+.disorder-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 1.6rem;
 }
 
 /* Spezifisches Styling für Tickets */
@@ -139,7 +156,7 @@ html {
     padding: 20px;
     font-size: 1.8rem;
     font-weight: bold;
-    border-top: 2px solid var(--primary);
+    border-top: 2px solid var(--line);
     margin-top: 20px;
 }
 
@@ -171,7 +188,7 @@ html {
     padding: 40px;
     border-radius: 20px;
     width: 100%;
-    max-width: 600px;
+    max-width: 1000px;
 }
 
 .ticket-receipt {
@@ -257,7 +274,7 @@ html {
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 500px;
+    max-width: 900px;
 }
 
 .check-icon {
@@ -302,12 +319,16 @@ html {
     gap: 15px;
     /* Abstand zwischen den Items */
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: center;
 }
 
 .bestseller-item {
     flex: 1 1 calc(25% - 15px);
     /* Basisgröße ist 25% (also 4 Stück), minus Gap */
     min-width: 150px;
+    max-width: 250px;
     /* Verhindert, dass sie auf dem Handy zu winzig werden */
     display: flex;
     flex-direction: column;
@@ -342,7 +363,7 @@ html {
 
 .cart-list {
     width: 100%;
-    max-width: 600px;
+    max-width: 1000px;
 }
 
 .cart-item {
@@ -400,27 +421,58 @@ html {
     border: 1px solid white;
 }
 
-.touch-grid {
-    margin-top: 30px;
-}
-
 .action-footer {
-display: flex;
-    flex-direction: row;      /* Erzwingt die Reihe */
-    justify-content: center;  /* Zentriert die Buttons nebeneinander */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* Erzwingt die Reihe */
+    justify-content: center;
+    /* Zentriert die Buttons nebeneinander */
     align-items: center;
-    gap: 20px;               /* Schafft den Abstand zwischen den Buttons */
-    margin-top: auto;         /* Schiebt alles nach unten */
+    gap: 0 20px;
+    /* Schafft den Abstand zwischen den Buttons */
+    margin-top: auto;
+    /* Schiebt alles nach unten */
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
     box-sizing: border-box;
 }
 
 /* Falls die Buttons gleich groß sein sollen */
 .action-footer a {
-    flex: 1;                       /* Beide Buttons nehmen den gleichen Platz ein */
+    flex: 1;
+    /* Beide Buttons nehmen den gleichen Platz ein */
     text-align: center;
-    padding: 15px;
+    padding-top: 15px;
     text-decoration: none;
     border-radius: 8px;
+    max-width: 50%;
+}
+
+.action-footer span {
+    width: 100%;
+    margin-top: 5px;
+    text-align: center;
+    color: #888;
+    font-size: 0.8rem;
+}
+
+.link-footer {
+    color: #888;
+}
+
+.separate-line {
+    margin: 5px 0;
+    opacity: 0.8;
+    border: 0;
+    border-top: 1px solid var(--line);
+    width: 1200px;
+}
+
+.alert-error {
+    color: #a00;
+    background: #fdd;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
 }

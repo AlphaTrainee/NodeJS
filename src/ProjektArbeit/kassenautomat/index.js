@@ -48,6 +48,7 @@ app.use((req, res, next) => {
     res.locals.session = req.session;
     res.locals.cartCount = (req.session && req.session.cart) ? req.session.cart.length : 0;
     res.locals.currentPage = req.path.split('/')[1] || 'home';
+    res.locals.debugMode = process.env.DEBUG === 'true';
     next(); // WICHTIG: Damit die Anfrage zur nächsten Station weitergeht!
 });
 

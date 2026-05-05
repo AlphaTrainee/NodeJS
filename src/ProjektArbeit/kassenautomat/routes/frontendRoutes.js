@@ -3,6 +3,8 @@ import Category from '../models/Category.js';
 import Ticket from '../models/Ticket.js';
 import SoldTicket from '../models/SoldTicket.js';
 import Sale from '../models/Sale.js';
+import fs from 'fs';
+import path from 'path';
 
 Sale.hasMany(SoldTicket, { foreignKey: 'saleId' });
 SoldTicket.belongsTo(Sale, { foreignKey: 'saleId' });
@@ -11,6 +13,36 @@ SoldTicket.belongsTo(Ticket, { foreignKey: 'ticketId' });
 Ticket.belongsTo(Category, { foreignKey: 'category' });
 
 const router = express.Router();
+
+const logErrorToFile = (error) => {
+    try {
+        // 1. Ordner festlegen (logs/)
+        const logDir = path.join(process.cwd(), 'logs', 'frontend');
+        
+        // 2. Aktuelles Datum für den Dateinamen (Format: YYYY-MM-DD)
+        const date = new Date().toISOString().split('T')[0]; 
+        const logPath = path.join(logDir, `${date}-error.log`);
+
+        // 3. Zeitstempel für den Log-Eintrag (HH:MM:SS)
+        const time = new Date().toLocaleTimeString('de-DE');
+        
+        // 4. Die Nachricht zusammenbauen
+        const logMessage = `[${time}] ERROR: ${error.message}\n` +
+                           `Stack: ${error.stack}\n` +
+                           `------------------------------------------\n`;
+
+        // 5. Sicherstellen, dass der Ordner existiert
+        if (!fs.existsSync(logDir)) {
+            fs.mkdirSync(logDir, { recursive: true });
+        }
+
+        // 6. Anhängen oder neu erstellen
+        fs.appendFileSync(logPath, logMessage, 'utf8');
+    } catch (loggingErr) {
+        // Falls das Schreiben selbst fehlschlägt, zumindest in die Konsole werfen
+        console.error("Logging failed:", loggingErr);
+    }
+};
 
 const getCartInfo = (req) => {
     return {
@@ -31,7 +63,13 @@ router.get('/', (req, res) => {
             res.render('frontend/index');
         });
     } catch (err) {
-        res.status(500).render('frontend/index', { error: "Server-Fehler", err });
+        logErrorToFile(err);
+
+        if (process.env.DEBUG === 'true') {
+            res.status(500).render('frontend/index', { error: "Server-Fehler", err });
+        } else {
+            return res.status(503).render('frontend/disorder');
+        }
     }
 });
 
@@ -85,11 +123,17 @@ router.get('/categories', async (req, res) => {
             currentPage: 'categories'
         });
     } catch (err) {
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/categories', { error: "Ungültige Eingaben", err });
-        }
+        logErrorToFile(err);
 
-        res.status(500).render('frontend/categories', { error: "Server-Fehler", err });
+        if (process.env.DEBUG === 'true') {
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/categories', { error: "Ungültige Eingaben", err });
+            }
+
+            res.status(500).render('frontend/categories', { error: "Server-Fehler", err });
+        } else {
+            return res.status(503).render('frontend/disorder');
+        }
     }
 });
 
@@ -125,19 +169,25 @@ router.get('/categories/:katId', async (req, res) => {
             });
         });
     } catch (err) {
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/tickets', {
+        logErrorToFile(err);
+
+        if (process.env.DEBUG === 'true') {
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/tickets', {
+                    currentPage: 'tickets',
+                    cartCount: req.session.cart.length,
+                    error: "Ungültige Eingaben", err
+                });
+            }
+
+            res.status(500).render('frontend/tickets', {
                 currentPage: 'tickets',
                 cartCount: req.session.cart.length,
-                error: "Ungültige Eingaben", err
+                error: "Server-Fehler", err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/tickets', {
-            currentPage: 'tickets',
-            cartCount: req.session.cart.length,
-            error: "Server-Fehler", err
-        });
     }
 
 });
@@ -164,32 +214,38 @@ router.get('/cart/add/:id', async (req, res) => {
         }
         res.redirect('/cart');
     } catch (err) {
-        const cart = req.session.cart || [];
+        logErrorToFile(err);
 
-        // Berechnung der Gesamtsumme inkl. Mengen
-        const total = cart.reduce((sum, item) => {
-            const p = parseFloat(item.preis) || 0;
-            const q = parseInt(item.quantity) || 1;
-            return sum + (p * q);
-        }, 0);
+        if (process.env.DEBUG === 'true') {
+            const cart = req.session.cart || [];
 
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/cart', {
+            // Berechnung der Gesamtsumme inkl. Mengen
+            const total = cart.reduce((sum, item) => {
+                const p = parseFloat(item.preis) || 0;
+                const q = parseInt(item.quantity) || 1;
+                return sum + (p * q);
+            }, 0);
+
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/cart', {
+                    cart,
+                    total,
+                    currentPage: 'cart',
+                    error: "Ungültige Eingaben",
+                    err
+                });
+            }
+
+            res.status(500).render('frontend/cart', {
                 cart,
                 total,
                 currentPage: 'cart',
-                error: "Ungültige Eingaben",
+                error: "Server-Fehler",
                 err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/cart', {
-            cart,
-            total,
-            currentPage: 'cart',
-            error: "Server-Fehler",
-            err
-        });
     }
 });
 
@@ -218,32 +274,38 @@ router.get('/cart/add-by-name', async (req, res) => {
         }
         res.redirect('/cart');
     } catch (err) {
-        const cart = req.session.cart || [];
+        logErrorToFile(err);
 
-        // Berechnung der Gesamtsumme inkl. Mengen
-        const total = cart.reduce((sum, item) => {
-            const p = parseFloat(item.preis) || 0;
-            const q = parseInt(item.quantity) || 1;
-            return sum + (p * q);
-        }, 0);
+        if (process.env.DEBUG === 'true') {
+            const cart = req.session.cart || [];
 
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/cart', {
+            // Berechnung der Gesamtsumme inkl. Mengen
+            const total = cart.reduce((sum, item) => {
+                const p = parseFloat(item.preis) || 0;
+                const q = parseInt(item.quantity) || 1;
+                return sum + (p * q);
+            }, 0);
+
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/cart', {
+                    cart,
+                    total,
+                    currentPage: 'cart',
+                    error: "Ungültige Eingaben",
+                    err
+                });
+            }
+
+            res.status(500).render('frontend/cart', {
                 cart,
                 total,
                 currentPage: 'cart',
-                error: "Ungültige Eingaben",
+                error: "Server-Fehler",
                 err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/cart', {
-            cart,
-            total,
-            currentPage: 'cart',
-            error: "Server-Fehler",
-            err
-        });
     }
 });
 
@@ -262,32 +324,38 @@ router.get('/cart/remove/:id', (req, res) => {
         }
         res.redirect('/cart');
     } catch (err) {
-        const cart = req.session.cart || [];
+        logErrorToFile(err);
 
-        // Berechnung der Gesamtsumme inkl. Mengen
-        const total = cart.reduce((sum, item) => {
-            const p = parseFloat(item.preis) || 0;
-            const q = parseInt(item.quantity) || 1;
-            return sum + (p * q);
-        }, 0);
+        if (process.env.DEBUG === 'true') {
+            const cart = req.session.cart || [];
 
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/cart', {
+            // Berechnung der Gesamtsumme inkl. Mengen
+            const total = cart.reduce((sum, item) => {
+                const p = parseFloat(item.preis) || 0;
+                const q = parseInt(item.quantity) || 1;
+                return sum + (p * q);
+            }, 0);
+
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/cart', {
+                    cart,
+                    total,
+                    currentPage: 'cart',
+                    error: "Ungültige Eingaben",
+                    err
+                });
+            }
+
+            res.status(500).render('frontend/cart', {
                 cart,
                 total,
                 currentPage: 'cart',
-                error: "Ungültige Eingaben",
+                error: "Server-Fehler",
                 err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/cart', {
-            cart,
-            total,
-            currentPage: 'cart',
-            error: "Server-Fehler",
-            err
-        });
     }
 });
 
@@ -307,32 +375,38 @@ router.get('/cart/delete/:id', async (req, res) => {
             res.redirect('/cart');
         });
     } catch (err) {
+        logErrorToFile(err);
+
         const cart = req.session.cart || [];
 
-        // Berechnung der Gesamtsumme inkl. Mengen
-        const total = cart.reduce((sum, item) => {
-            const p = parseFloat(item.preis) || 0;
-            const q = parseInt(item.quantity) || 1;
-            return sum + (p * q);
-        }, 0);
+        if (process.env.DEBUG === 'true') {
+            // Berechnung der Gesamtsumme inkl. Mengen
+            const total = cart.reduce((sum, item) => {
+                const p = parseFloat(item.preis) || 0;
+                const q = parseInt(item.quantity) || 1;
+                return sum + (p * q);
+            }, 0);
 
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/cart', {
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/cart', {
+                    cart,
+                    total,
+                    currentPage: 'cart',
+                    error: "Ungültige Eingaben",
+                    err
+                });
+            }
+
+            res.status(500).render('frontend/cart', {
                 cart,
                 total,
                 currentPage: 'cart',
-                error: "Ungültige Eingaben",
+                error: "Server-Fehler",
                 err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/cart', {
-            cart,
-            total,
-            currentPage: 'cart',
-            error: "Server-Fehler",
-            err
-        });
     }
 });
 
@@ -354,32 +428,38 @@ router.get('/cart', async (req, res) => {
             currentPage: 'cart'
         });
     } catch (err) {
-        const cart = req.session.cart || [];
+        logErrorToFile(err);
 
-        // Berechnung der Gesamtsumme inkl. Mengen
-        const total = cart.reduce((sum, item) => {
-            const p = parseFloat(item.preis) || 0;
-            const q = parseInt(item.quantity) || 1;
-            return sum + (p * q);
-        }, 0);
+        if (process.env.DEBUG === 'true') {
+            const cart = req.session.cart || [];
 
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/cart', {
+            // Berechnung der Gesamtsumme inkl. Mengen
+            const total = cart.reduce((sum, item) => {
+                const p = parseFloat(item.preis) || 0;
+                const q = parseInt(item.quantity) || 1;
+                return sum + (p * q);
+            }, 0);
+
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/cart', {
+                    cart,
+                    total,
+                    currentPage: 'cart',
+                    error: "Ungültige Eingaben",
+                    err
+                });
+            }
+
+            res.status(500).render('frontend/cart', {
                 cart,
                 total,
                 currentPage: 'cart',
-                error: "Ungültige Eingaben",
+                error: "Server-Fehler",
                 err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/cart', {
-            cart,
-            total,
-            currentPage: 'cart',
-            error: "Server-Fehler",
-            err
-        });
     }
 });
 
@@ -389,7 +469,13 @@ router.get('/cart/clear', (req, res) => {
         req.session.cart = [];
         res.redirect('/');
     } catch (err) {
-        res.status(500).render('frontend/cart', { error: "Server-Fehler", err });
+        logErrorToFile(err);
+
+        if (process.env.DEBUG === 'true') {
+            res.status(500).render('frontend/cart', { error: "Server-Fehler", err });
+        } else {
+            return res.status(503).render('frontend/disorder');
+        }
     }
 });
 
@@ -433,21 +519,27 @@ router.get('/checkout', async (req, res) => {
         });
 
     } catch (err) {
-        if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).render('frontend/success', {
+        logErrorToFile(err);
+
+        if (process.env.DEBUG === 'true') {
+            if (err.name === 'SequelizeValidationError' || err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(400).render('frontend/success', {
+                    currentPage: 'success',
+                    tickets: [],
+                    error: "Fehler bei der Abwicklung des Verkaufs",
+                    err
+                });
+            }
+
+            res.status(500).render('frontend/success', {
                 currentPage: 'success',
                 tickets: [],
-                error: "Fehler bei der Abwicklung des Verkaufs",
+                error: "Server-Fehler",
                 err
             });
+        } else {
+            return res.status(503).render('frontend/disorder');
         }
-
-        res.status(500).render('frontend/success', {
-            currentPage: 'success',
-            tickets: [],
-            error: "Server-Fehler",
-            err
-        });
     }
 });
 
@@ -460,10 +552,76 @@ router.get('/doc', (req, res) => {
 });
 
 // um Fehler zu triggern
-router.get('/test/error', (req, res) => {
+router.get('/debug/error', (req, res) => {
     console.log(`Triggert einen Error 500`);
     throw new Error("Das ist ein Test-Fehler!");
     return;
+});
+
+// --- DEBUG ROUTES ZUM TESTEN DER FEHLERSEITEN ---
+
+// 1. Triggered einen 500er Fehler (Allgemeiner Server-Fehler)
+router.get('/debug/500', (req, res, next) => {
+    // Wir werfen absichtlich einen Error
+    const error = new Error("Kritischer Systemfehler simuliert!");
+
+    logErrorToFile(error);
+
+    // Optional: stack trace für die Anzeige mitgeben
+    res.status(500).render('frontend/index', { 
+        error: "Server-Fehler Simulation", 
+        err: error 
+    });
+});
+
+// 2. Triggered einen 400er Fehler (Simulierter Datenbank-Validierungsfehler)
+// Das testet, ob deine Catch-Blöcke die Sequelize-Fehler sauber abfangen
+router.get('/debug/400', (req, res) => {
+    const fakeSequelizeError = {
+        name: 'SequelizeValidationError',
+        errors: [{ message: "Die Ticket-Anzahl darf nicht negativ sein" }]
+    };
+    
+    // Wir nutzen hier das cart-Template, da dort oft Fehler angezeigt werden
+    res.status(400).render('frontend/cart', { 
+        cart: req.session.cart || [],
+        total: 0,
+        currentPage: 'cart',
+        error: "Validierungsfehler Simulation",
+        err: fakeSequelizeError
+    });
+});
+
+// 3. Simulation eines Fehlers im Warenkorb (Redirect mit Fehlermeldung)
+router.get('/debug/cart-error', (req, res) => {
+    res.status(500).render('frontend/cart', {
+        cart: req.session.cart || [],
+        total: 0,
+        currentPage: 'cart',
+        error: "Warenkorb konnte nicht geladen werden!",
+        err: { message: "Datenbankverbindung zum Warenkorb unterbrochen" }
+    });
+});
+
+// 4. Test für eine unbekannte Route (404)
+// WICHTIG: Diese Route muss ganz am Ende stehen, falls du eine globale 404-Seite hast.
+// Ansonsten kannst du sie einfach so aufrufen:
+router.get('/debug/404', (req, res) => {
+    res.status(404).render('frontend/index', { 
+        error: "Seite nicht gefunden", 
+        err: { message: "Die angeforderte URL existiert nicht." } 
+    });
+});
+
+router.use((err, req, res, next) => {
+    logErrorToFile(err);
+
+    if (process.env.DEBUG === 'true') {
+        res.status(500)
+            .render('error', { error: `Ein unerwarteter Fehler ist aufgetreten`, err });
+    } else {
+        return res.status(503).render('frontend/disorder');
+    }
 });
 
 export default router;

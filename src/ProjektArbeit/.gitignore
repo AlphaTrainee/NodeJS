@@ -1,0 +1,15 @@
+# Abhängigkeiten (der wichtigste Part)
+node_modules/
+
+# Logs
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Umgebungsvariablen (Passwörter, API-Keys etc.)
+.env
+
+# Betriebssystem-Dateien
+.DS_Store
+Thumbs.db

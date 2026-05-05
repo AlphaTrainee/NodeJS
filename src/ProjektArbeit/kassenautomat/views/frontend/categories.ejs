@@ -6,23 +6,21 @@
     <title>Kategorie wählen</title>
 </head>
 <body>
-    <!-- Top Navigation -->
     <%- include('../partials/frontend-nav') %>
     <%- include('../partials/error-box') %>
 
     <div class="content-container">
     <% if (bestsellers && bestsellers.length > 0) { %>
-        <h2 style="color: var(--primary);">Oft gekauft</h2>
+        <h2>Bestseller</h2>
         <div class="bestseller-grid">
             <% bestsellers.slice(0, 8).forEach(item => { %>
-                <!-- Hier bauen wir einen Button, der direkt in den Warenkorb führt -->
                 <a href="/cart/add-by-name?name=<%= encodeURIComponent(item.ticketName) %>" class="bestseller-item">
                     <span class="star">★</span>
                     <span class="name"><%= item.ticketName %></span>
                 </a>
             <% }) %>
         </div>
-        <hr style="margin: 30px 0; opacity: 0.2;">
+        <hr class="separate-line">
     <% } %>
 
     <h2>Alle Kategorien</h2>

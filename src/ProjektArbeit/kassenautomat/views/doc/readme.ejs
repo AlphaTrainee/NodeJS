@@ -3,6 +3,24 @@
 Der Kunde kommt an einen (Touch) Monitor um sich Tickets für Veranstaltungen zu kaufen.</p>
 <h2>Technik</h2>
 <p>Bei dem vorliegenden Projekt handelt es sich um eine serverseitige Webanwendung auf Basis von Node.js und dem Express-Framework. Die Architektur folgt dem REST-Prinzip und nutzt Sequelize als Object-Relational Mapper (ORM). Dies ermöglicht eine datenbankagnostische Entwicklung, wobei das System flexibel sowohl mit SQLite (für die lokale Entwicklung) als auch mit MySQL (für den Produktivbetrieb) interagieren kann. Zur Absicherung der Benutzersitzungen wird ein Session-Management integriert, während CORS eine sichere Kommunikation mit Frontend-Clients gewährleistet.</p>
+<h2>Voraussetzungen / Installation</h2>
+<p>Es wird mit vsCode und der Extension wk-j.save-and-run gearbeitet.
+Für (DIESE) Dokumentation wird automatisch aus einem MarkDown Dokument eine *.html (in diesem Fall *.ejs Datei erzeugt)</p>
+<p><strong>die Installation <code>npm i</code> im Root Ordner ausführen</strong><br>
+Das Projekt (das Arbeitsverzeichnis) selber befindet sich im Unterordner <code>Kassenautomat</code>.<br>
+Dies ist notwendig, um das Ausführen des der automatischen Konvertierung *.md -&gt; -.ejs zu ermöglichen</p>
+<ul>
+<li>alle Voraussetzungen mit <code>npm i</code> installieren</li>
+<li>die <code>.env.example</code> nach <code>.env</code> umbenennen und für die eigene Installation anpassen</li>
+</ul>
+<h4>Seed - Datenbank erzeugen / Beispieldaten einspielen</h4>
+<ul>
+<li>wenn in der <code>.env</code> der Wert <code>DB_SEED_FORCE=true</code> gesetzt ist, wird die DB komplett zurückgesetzt</li>
+<li>ist die Einstellung <code>DB_SEED_FORCE=false</code> werden nur fehlende Einträge erstellt, aber die bestehenden Daten bleiben erhalten</li>
+</ul>
+<p>Der Seeder wird nicht im Programmablauf aufgerufen!
+Wenn Notwendig, mit <code>node seed.js</code> aufrufen</p>
+<p><strong>Projekt im Arbeitsverzeichnis <code>kassenautomat</code> starten: <code>node index.js</code></strong></p>
 <h2>Funktionen Frontend</h2>
 <h3><a href="/" target="_blank" rel="noopener noreferrer">Link: Frontend</a></h3>
 <ul>
